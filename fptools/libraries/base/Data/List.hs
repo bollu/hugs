@@ -209,7 +209,9 @@ import GHC.List
 import GHC.Base
 #endif
 
-infix 5 \\ 
+-- HACK: remove operator, since it seems to be getting emitted as 
+-- "infix 5 \"
+-- infix 5 \\ 
 
 -- -----------------------------------------------------------------------------
 -- List functions
