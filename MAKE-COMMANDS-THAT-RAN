@@ -1,0 +1,1532 @@
+gcc -c -g  -O2 hugs.c
+gcc -c -g  -O2 edit.c
+gcc -c -g  -O2 observe.c
+gcc -c -g  -O2 builtin.c
+In file included from builtin.c:92:0:
+builtin.c: In function ‘primPtrToInt’:
+builtin.c:1253:23: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+ Ptr2Int(primPtrToInt,((Int)x))         /* Getting the pointer              */
+                       ^
+builtin.h:102:9: note: in definition of macro ‘Ptr2Int’
+     r = e;                                         \
+         ^
+iomonad.c: In function ‘primCastSPToP’:
+iomonad.c:1654:15: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+     PtrResult((Pointer)x);
+               ^
+builtin.h:37:52: note: in definition of macro ‘update’
+ #define update(l,r)             ((snd(stack(root))=r),(fst(stack(root))=l))
+                                                    ^
+builtin.h:83:4: note: in expansion of macro ‘updateRoot’
+    updateRoot(mkPtr(nm))
+    ^
+iomonad.c:1654:5: note: in expansion of macro ‘PtrResult’
+     PtrResult((Pointer)x);
+     ^
+iomonad.c: In function ‘primCastPToSP’:
+iomonad.c:1621:21: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    updateRoot(mkInt((Int)(nm)))
+                     ^
+builtin.h:37:52: note: in definition of macro ‘update’
+ #define update(l,r)             ((snd(stack(root))=r),(fst(stack(root))=l))
+                                                    ^
+iomonad.c:1621:4: note: in expansion of macro ‘updateRoot’
+    updateRoot(mkInt((Int)(nm)))
+    ^
+iomonad.c:1660:5: note: in expansion of macro ‘SPResult’
+     SPResult((HsStablePtr)x);
+     ^
+In file included from builtin.c:20:0:
+builtin.c: In function ‘putStablePtr4’:
+builtin.c:1738:10: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+     push((HugsStablePtr)x);
+          ^
+storage.h:1085:35: note: in definition of macro ‘onto’
+ #define onto(c)      stack(++sp)=(c)
+                                   ^
+builtin.c:1738:5: note: in expansion of macro ‘push’
+     push((HugsStablePtr)x);
+     ^
+builtin.c: In function ‘getStablePtr4’:
+builtin.c:1743:12: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+     return (HsStablePtr)x;
+            ^
+builtin.c: In function ‘freeStablePtr4’:
+builtin.c:1747:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+     if (x) freeStablePtr((HugsStablePtr)x);
+                          ^
+gcc -c -g  compiler.c
+gcc -c -g  -O2 errors.c
+gcc -c -g  -O2 evaluator.c
+gcc -c -g  -O2 ffi.c
+gcc -c -g  -O2 goal.c
+gcc -c -g  -O2 input.c
+gcc -c -g  -O2 machdep.c
+machdep.c: In function ‘RealPath’:
+machdep.c:426:2: warning: ignoring return value of ‘realpath’, declared with attribute warn_unused_result [-Wunused-result]
+  realpath(s,path);                
+  ^
+gcc -c -g  -O2 machine.c
+gcc -c -g  module.c
+gcc -c -g  -O2 opts.c
+gcc -c -g  -O2 output.c
+gcc -c -g  -O2 plugin.c
+gcc -c -g  -O2 script.c
+gcc -c -g  static.c
+gcc -c -g  -O2 storage.c
+gcc -c -g  -O2 strutil.c
+gcc -c -g  subst.c
+gcc -c -g  type.c
+gcc  hugs.o edit.o observe.o builtin.o compiler.o errors.o evaluator.o ffi.o goal.o input.o machdep.o machine.o module.o opts.o output.o plugin.o script.o static.o storage.o strutil.o subst.o type.o version.o  -lreadline -lncurses -lm -ldl  -o hugs 
+gcc -c -g  -O2 runhugs.c
+gcc -c -g  -O2 server.c
+gcc  runhugs.o server.o builtin.o compiler.o errors.o evaluator.o ffi.o goal.o input.o machdep.o machine.o module.o opts.o output.o plugin.o script.o static.o storage.o strutil.o subst.o type.o version.o  -lreadline -lncurses -lm -ldl  -o runhugs
+gcc -c -g  -O2 -DFFI_COMPILER runhugs.c -o ffihugs.o
+gcc  ffihugs.o server.o builtin.o compiler.o errors.o evaluator.o ffi.o goal.o input.o machdep.o machine.o module.o opts.o output.o plugin.o script.o static.o storage.o strutil.o subst.o type.o version.o  -lreadline -lncurses -lm -ldl  -o ffihugs
+mkdir -p ../hugsdir/include
+/bin/cp HsFFI.h config.h platform.h unix/MachDeps.h unix/template-hsc.h ../hugsdir/include
+mkdir -p ../hugsdir/tools
+/bin/cp ../tools/Package.hs ../tools/ParsePkgConf.hs ../tools/get_pkg_field ../hugsdir/tools
+mkdir -p ../hugsdir/libraries/Hugs
+/bin/cp ../libraries/Hugs/*.* ../hugsdir/libraries/Hugs
+cd unix; ./convert_libraries /home/bollu/work/hugs/hugs/fptools ../../hugsdir
+Converting Control/Arrow
+Converting Control/Concurrent
+Converting Control/Concurrent/Chan
+Converting Control/Concurrent/MVar
+Converting Control/Concurrent/QSem
+Converting Control/Concurrent/QSemN
+Converting Control/Concurrent/SampleVar
+Converting Control/Exception
+Converting Control/Monad
+Converting Control/Monad/Cont
+Converting Control/Monad/Error
+Converting Control/Monad/Fix
+Converting Control/Monad/Identity
+Converting Control/Monad/List
+Converting Control/Monad/Reader
+Converting Control/Monad/RWS
+Converting Control/Monad/ST
+Converting Control/Monad/State
+Converting Control/Monad/ST/Lazy
+Converting Control/Monad/ST/Strict
+Converting Control/Monad/Trans
+Converting Control/Monad/Writer
+Converting Control/Parallel
+Converting Data/Array
+Converting Data/Array/Base
+Converting Data/Array/Diff
+Converting Data/Array/IArray
+Converting Data/Array/IO
+Converting Data/Array/IO/Internals
+Converting Data/Array/MArray
+Converting Data/Array/ST
+Converting Data/Array/Storable
+Converting Data/Array/Unboxed
+Converting Data/Bits
+Converting Data/Bool
+Converting Data/Char
+Converting Data/Complex
+Converting Data/Dynamic
+Converting Data/Either
+Converting Data/FiniteMap
+Converting Data/Graph
+Converting Data/HashTable
+Converting Data/Int
+Converting Data/IORef
+Converting Data/Ix
+Converting Data/List
+/home/bollu/work/hugs/hugs/fptools/libraries/base/Data/List.hs:214:13: warning: backslash and newline separated by space
+ -- infix 5 \\ 
+             ^
+Converting Data/Maybe
+Converting Data/Monoid
+Converting Data/PackedString
+Converting Data/Ratio
+Converting Data/Set
+Converting Data/STRef
+Converting Data/STRef/Lazy
+Converting Data/STRef/Strict
+Converting Data/Tree
+Converting Data/Tuple
+Converting Data/Typeable
+Converting Data/Unique
+Converting Data/Word
+Converting Debug/Trace
+Converting Foreign
+Converting Foreign/C
+Converting Foreign/C/Error
+Converting Foreign/C/String
+Converting Foreign/C/Types
+Converting Foreign/ForeignPtr
+Converting Foreign/Marshal
+Converting Foreign/Marshal/Alloc
+Converting Foreign/Marshal/Array
+Converting Foreign/Marshal/Error
+Converting Foreign/Marshal/Pool
+Converting Foreign/Marshal/Utils
+Converting Foreign/Ptr
+Converting Foreign/StablePtr
+Converting Foreign/Storable
+Converting Numeric
+Converting Prelude
+Converting System/Cmd
+Converting System/Console/GetOpt
+Converting System/CPUTime
+Converting System/Directory
+Converting System/Environment
+Converting System/Exit
+Converting System/Info
+Converting System/IO
+Converting System/IO/Error
+Converting System/IO/Unsafe
+Converting System/Locale
+Converting System/Mem
+Converting System/Mem/StableName
+Converting System/Mem/Weak
+Converting System/Posix/Internals
+Converting System/Posix/Signals
+In file included from Signals.hsc:97:0:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isreg’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isreg(m)  { return S_ISREG(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isdir’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isdir(m)  { return S_ISDIR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isfifo’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isfifo(m) { return S_ISFIFO(m); }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isblk’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isblk(m)  { return S_ISBLK(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_ischr’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_ischr(m)  { return S_ISCHR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_issock’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_issock(m) { return S_ISSOCK(m); }
+            ^
+Converting System/Posix/Types
+Converting System/Random
+Converting System/Time
+Converting Text/Html
+Converting Text/Html/BlockTable
+Converting Text/ParserCombinators/ReadP
+Converting Text/ParserCombinators/ReadPrec
+Converting Text/PrettyPrint
+Converting Text/PrettyPrint/HughesPJ
+Converting Text/Read
+Converting Text/Read/Lex
+Converting Text/Regex
+Converting Text/Regex/Posix
+In file included from /home/bollu/work/hugs/hugs/fptools/libraries/base/Text/Regex/Posix_hsc_make.c:1:0:
+Posix.hsc: In function ‘main’:
+../../hugsdir/include/template-hsc.h:51:17: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘long unsigned int’ [-Wformat=]
+         printf ("%s%d",                                     \
+                 ^
+Posix.hsc:115:5: note: in expansion of macro ‘hsc_type’
+../../hugsdir/include/template-hsc.h:51:17: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘long unsigned int’ [-Wformat=]
+         printf ("%s%d",                                     \
+                 ^
+Posix.hsc:116:5: note: in expansion of macro ‘hsc_type’
+../../hugsdir/include/template-hsc.h:51:17: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘long unsigned int’ [-Wformat=]
+         printf ("%s%d",                                     \
+                 ^
+Posix.hsc:124:5: note: in expansion of macro ‘hsc_type’
+../../hugsdir/include/template-hsc.h:51:17: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘long unsigned int’ [-Wformat=]
+         printf ("%s%d",                                     \
+                 ^
+Posix.hsc:125:5: note: in expansion of macro ‘hsc_type’
+Converting Text/Show
+Converting Text/Show/Functions
+Converting Array
+Converting Bits
+Converting CError
+Converting CForeign
+Converting Char
+Converting Complex
+Converting CPUTime
+Converting CString
+Converting CTypes
+Converting Directory
+Converting ForeignPtr
+Converting Int
+Converting IO
+Converting Ix
+Converting List
+Converting Locale
+Converting MarshalAlloc
+Converting MarshalArray
+Converting MarshalError
+Converting MarshalUtils
+Converting Maybe
+Converting Monad
+Converting Ptr
+Converting Random
+Converting Ratio
+Converting StablePtr
+Converting Storable
+Converting System
+Converting Time
+Converting Word
+Converting Language/Haskell/Lexer
+Converting Language/Haskell/ParseMonad
+Converting Language/Haskell/Parser
+Converting Language/Haskell/ParseUtils
+Converting Language/Haskell/Pretty
+Converting Language/Haskell/Syntax
+Converting Network
+Converting Network/BSD
+Converting Network/CGI
+Converting Network/Socket
+In file included from /home/bollu/work/hugs/hugs/fptools/libraries/network/Network/Socket_hsc_make.c:1:0:
+Socket.hsc: In function ‘main’:
+../../hugsdir/include/template-hsc.h:51:17: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘long unsigned int’ [-Wformat=]
+         printf ("%s%d",                                     \
+                 ^
+Socket.hsc:327:5: note: in expansion of macro ‘hsc_type’
+Socket.hsc:922:23: error: invalid application of ‘sizeof’ to incomplete type ‘struct ucred’
+../../hugsdir/include/template-hsc.h:25:10: note: in definition of macro ‘hsc_const’
+     if ((x) < 0)                            \
+          ^
+Socket.hsc:922:23: error: invalid application of ‘sizeof’ to incomplete type ‘struct ucred’
+../../hugsdir/include/template-hsc.h:26:31: note: in definition of macro ‘hsc_const’
+         printf ("%ld", (long)(x));          \
+                               ^
+Socket.hsc:922:23: error: invalid application of ‘sizeof’ to incomplete type ‘struct ucred’
+../../hugsdir/include/template-hsc.h:28:40: note: in definition of macro ‘hsc_const’
+         printf ("%lu", (unsigned long)(x));
+                                        ^
+In file included from /usr/include/rpc/netdb.h:42:0,
+                 from /usr/include/netdb.h:32,
+                 from /home/bollu/work/hugs/hugs/fptools/libraries/network/include/HsNet.h:72,
+                 from Socket.hsc:22:
+Socket.hsc:928:22: error: invalid use of undefined type ‘struct ucred’
+Socket.hsc:928:5: note: in expansion of macro ‘hsc_peek’
+Socket.hsc:929:22: error: invalid use of undefined type ‘struct ucred’
+Socket.hsc:929:5: note: in expansion of macro ‘hsc_peek’
+Socket.hsc:930:22: error: invalid use of undefined type ‘struct ucred’
+Socket.hsc:930:5: note: in expansion of macro ‘hsc_peek’
+hugs-package: 235: hugs-package: ../../hugsdir/libraries/Network/Socket_hsc_make: not found
+rm: cannot remove '../../hugsdir/libraries/Network/Socket_hsc_make': No such file or directory
+Converting Network/URI
+Converting Text/ParserCombinators/Parsec
+Converting Text/ParserCombinators/Parsec/Char
+Converting Text/ParserCombinators/Parsec/Combinator
+Converting Text/ParserCombinators/Parsec/Error
+Converting Text/ParserCombinators/Parsec/Expr
+Converting Text/ParserCombinators/Parsec/Language
+Converting Text/ParserCombinators/Parsec/Perm
+Converting Text/ParserCombinators/Parsec/Pos
+Converting Text/ParserCombinators/Parsec/Prim
+Converting Text/ParserCombinators/Parsec/Token
+Converting Debug/QuickCheck
+Converting Debug/QuickCheck/Poly
+Converting Debug/QuickCheck/Utils
+Converting System/Posix
+Converting System/Posix/Directory
+Converting System/Posix/DynamicLinker
+Converting System/Posix/DynamicLinker/Module
+Converting System/Posix/DynamicLinker/Prim
+Converting System/Posix/Env
+Converting System/Posix/Files
+Converting System/Posix/IO
+Converting System/Posix/Process
+Converting System/Posix/Resource
+Converting System/Posix/Temp
+Converting System/Posix/Terminal
+Converting System/Posix/Time
+Converting System/Posix/Unistd
+Converting System/Posix/User
+Stub ConcBase -> Hugs.ConcBase
+Stub Memo -> Hugs.Memo
+Stub Observe -> Hugs.Observe
+Converting CVar.lhs
+Converting Chan.lhs
+Converting Channel.lhs
+Converting ChannelVar.lhs
+Converting Concurrent.lhs
+Converting MVar.lhs
+Converting Parallel.lhs
+Converting QSem.lhs
+Converting QSemN.lhs
+Converting SampleVar.lhs
+Converting Semaphore.lhs
+Converting FiniteMap.lhs
+Converting Set.lhs
+Converting Assoc.hs
+Converting AssocDefaults.hs
+Converting AssocList.hs
+Converting PatriciaLoMap.hs
+Converting EdisonPrelude.hs
+Converting Collection.hs
+Converting CollectionDefaults.hs
+Converting CollectionUtils.hs
+Converting LazyPairingHeap.hs
+Converting LeftistHeap.hs
+Converting MinHeap.hs
+Converting SkewHeap.hs
+Converting SplayHeap.hs
+Converting TestOrdBag.hs
+Converting TestOrdSet.hs
+Converting UnbalancedSet.hs
+Converting BankersQueue.hs
+Converting BinaryRandList.hs
+Converting BraunSeq.hs
+Converting JoinList.hs
+Converting ListSeq.hs
+Converting MyersStack.hs
+Converting RandList.hs
+Converting RevSeq.hs
+Converting Sequence.hs
+Converting SequenceDefaults.hs
+Converting SimpleQueue.hs
+Converting SizedSeq.hs
+Converting TestSeq.hs
+Converting HsLexer.hs
+Converting HsParseMonad.hs
+Converting HsParseUtils.hs
+Converting HsParser.hs
+Converting HsPretty.hs
+Converting HsSyn.hs
+Copy Addr.hs
+Converting ArrayBase.hs
+Converting Arrow.hs
+Converting CTypesISO.hs
+Converting DiffArray.hs
+Converting Dynamic.hs
+Converting Exception.hs
+Copy ForeignObj.hs
+Converting IArray.hs
+Stub IOExts -> Hugs.IOExts Hugs.IORef Hugs.IOArray System.IO.Unsafe Debug.Trace
+Converting IORef.hs
+Stub LazyST -> Data.STRef.Lazy Control.Monad.ST.Lazy Hugs.LazyST
+Converting NativeInfo.hs
+Converting NumExts.lhs
+Converting PackedString.lhs
+Stub ST -> Data.STRef.Strict Data.Array.ST Control.Monad.ST Hugs.ST
+Converting ShowFunctions.hs
+Converting Stable.hs
+Converting StableName.hs
+Converting StorableArray.hs
+Converting Weak.hs
+Converting MonadCont.lhs
+Converting MonadEither.lhs
+Converting MonadError.lhs
+Converting MonadFix.lhs
+Converting MonadIdentity.lhs
+Converting MonadList.lhs
+Converting MonadRWS.lhs
+Converting MonadReader.lhs
+Converting MonadState.lhs
+Converting MonadTrans.lhs
+Converting MonadWriter.lhs
+Converting Monoid.lhs
+Converting BSD.hs
+Converting CGI.lhs
+Converting SocketPrim.hs
+Converting URI.hs
+Converting Pretty.lhs
+Converting RegexString.lhs
+Converting Html.lhs
+Converting HtmlBlockTable.lhs
+Converting Parsec.hs
+Converting ParsecChar.hs
+Converting ParsecCombinator.hs
+Converting ParsecError.hs
+Converting ParsecExpr.hs
+Converting ParsecLanguage.hs
+Converting ParsecPerm.hs
+Converting ParsecPos.hs
+Converting ParsecPrim.hs
+Converting ParsecToken.hs
+Converting GetOpt.lhs
+Converting Unique.lhs
+Converting QuickCheck.hs
+Converting QuickCheckPoly.hs
+Converting QuickCheckUtils.hs
+Copy AnsiInteract.hs
+Copy AnsiScreen.hs
+Stub CVHAssert -> Hugs.CVHAssert
+Stub GenericPrint -> Hugs.GenericPrint
+Stub HugsInternals -> Hugs.Internals
+Copy HugsLibs.hs
+Stub IOExtensions -> Hugs.IOExts
+Copy Interact.hs
+Copy ListUtils.hs
+Copy Number.hs
+Copy ParseLib.hs
+Stub Quote -> Hugs.Quote
+Copy StdLibs.hs
+Stub Trace -> Debug.Trace
+Stub Trex -> Hugs.Trex
+env HUGSDIR='../hugsdir' HUGSFLAGS='' ./ffihugs +G +L'../hugsdir/libraries/Hugs/Storable_aux.c' Hugs.Storable
+env HUGSDIR='../hugsdir' HUGSFLAGS='' unix/BuildFFI
+Compiling ../../hugsdir/libraries/Foreign/C/Error.hs
+In file included from ../../hugsdir/libraries/Foreign/C/Error.c:16:0:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isreg’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isreg(m)  { return S_ISREG(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isdir’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isdir(m)  { return S_ISDIR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isfifo’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isfifo(m) { return S_ISFIFO(m); }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isblk’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isblk(m)  { return S_ISBLK(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_ischr’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_ischr(m)  { return S_ISCHR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_issock’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_issock(m) { return S_ISSOCK(m); }
+            ^
+In file included from /home/bollu/work/hugs/hugs/fptools/libraries/base/cbits/errno.c:9:0:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isreg’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isreg(m)  { return S_ISREG(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isdir’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isdir(m)  { return S_ISDIR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isfifo’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isfifo(m) { return S_ISFIFO(m); }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isblk’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isblk(m)  { return S_ISBLK(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_ischr’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_ischr(m)  { return S_ISCHR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_issock’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_issock(m) { return S_ISSOCK(m); }
+            ^
+/tmp/ccy46Nck.o: In function `__hscore_s_isreg':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210: multiple definition of `__hscore_s_isreg'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_s_isdir':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211: multiple definition of `__hscore_s_isdir'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_s_isfifo':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212: multiple definition of `__hscore_s_isfifo'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_s_isblk':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213: multiple definition of `__hscore_s_isblk'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_s_ischr':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214: multiple definition of `__hscore_s_ischr'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_s_issock':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216: multiple definition of `__hscore_s_issock'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_sigemptyset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:223: multiple definition of `__hscore_sigemptyset'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:223: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_sigfillset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:227: multiple definition of `__hscore_sigfillset'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:227: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_sigaddset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:231: multiple definition of `__hscore_sigaddset'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:231: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_sigdelset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:235: multiple definition of `__hscore_sigdelset'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:235: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_sigismember':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:239: multiple definition of `__hscore_sigismember'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:239: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_memcpy_dst_off':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:244: multiple definition of `__hscore_memcpy_dst_off'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:244: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_memcpy_src_off':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:248: multiple definition of `__hscore_memcpy_src_off'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:248: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_supportsTextMode':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:252: multiple definition of `__hscore_supportsTextMode'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:252: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_bufsiz':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:262: multiple definition of `__hscore_bufsiz'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:262: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_seek_cur':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:268: multiple definition of `__hscore_seek_cur'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:268: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_o_binary':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:274: multiple definition of `__hscore_o_binary'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:274: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_o_rdonly':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:284: multiple definition of `__hscore_o_rdonly'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:284: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_o_wronly':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:294: multiple definition of `__hscore_o_wronly'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:294: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_o_rdwr':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:304: multiple definition of `__hscore_o_rdwr'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:304: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_o_append':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:314: multiple definition of `__hscore_o_append'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:314: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_o_creat':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:324: multiple definition of `__hscore_o_creat'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:324: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_o_excl':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:334: multiple definition of `__hscore_o_excl'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:334: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_o_trunc':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:344: multiple definition of `__hscore_o_trunc'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:344: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_o_noctty':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:354: multiple definition of `__hscore_o_noctty'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:354: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_o_nonblock':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:364: multiple definition of `__hscore_o_nonblock'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:364: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_seek_set':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:374: multiple definition of `__hscore_seek_set'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:374: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_seek_end':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:380: multiple definition of `__hscore_seek_end'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:380: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_setmode':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:386: multiple definition of `__hscore_setmode'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:386: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_PrelHandle_write':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:397: multiple definition of `__hscore_PrelHandle_write'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:397: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_PrelHandle_read':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:409: multiple definition of `__hscore_PrelHandle_read'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:409: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_mkdir':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:429: multiple definition of `__hscore_mkdir'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:429: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_lstat':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:439: multiple definition of `__hscore_lstat'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:439: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_long_path_size':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:452: multiple definition of `__hscore_long_path_size'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:452: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_R_OK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:458: multiple definition of `__hscore_R_OK'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:458: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_W_OK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:461: multiple definition of `__hscore_W_OK'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:461: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_X_OK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:464: multiple definition of `__hscore_X_OK'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:464: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_S_IRUSR':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:468: multiple definition of `__hscore_S_IRUSR'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:468: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_S_IWUSR':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:471: multiple definition of `__hscore_S_IWUSR'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:471: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_S_IXUSR':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:474: multiple definition of `__hscore_S_IXUSR'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:474: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_d_name':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:480: multiple definition of `__hscore_d_name'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:480: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_end_of_dir':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:491: multiple definition of `__hscore_end_of_dir'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:491: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_free_dirent':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:501: multiple definition of `__hscore_free_dirent'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:501: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_sizeof_stat':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:509: multiple definition of `__hscore_sizeof_stat'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:509: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_st_mtime':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:513: multiple definition of `__hscore_st_mtime'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:513: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_st_size':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:514: multiple definition of `__hscore_st_size'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:514: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_st_mode':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:516: multiple definition of `__hscore_st_mode'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:516: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_lflag':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:520: multiple definition of `__hscore_lflag'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:520: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_poke_lflag':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:523: multiple definition of `__hscore_poke_lflag'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:523: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_ptr_c_cc':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:527: multiple definition of `__hscore_ptr_c_cc'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:527: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_sizeof_termios':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:531: multiple definition of `__hscore_sizeof_termios'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:531: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_sizeof_sigset_t':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:543: multiple definition of `__hscore_sizeof_sigset_t'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:543: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_echo':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:550: multiple definition of `__hscore_echo'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:550: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_tcsanow':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:561: multiple definition of `__hscore_tcsanow'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:561: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_icanon':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:572: multiple definition of `__hscore_icanon'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:572: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_vmin':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:581: multiple definition of `__hscore_vmin'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:581: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_vtime':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:590: multiple definition of `__hscore_vtime'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:590: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_sigttou':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:599: multiple definition of `__hscore_sigttou'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:599: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_sig_block':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:608: multiple definition of `__hscore_sig_block'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:608: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_sig_setmask':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:617: multiple definition of `__hscore_sig_setmask'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:617: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_f_getfl':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:627: multiple definition of `__hscore_f_getfl'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:627: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_f_setfl':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:637: multiple definition of `__hscore_f_setfl'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:637: first defined here
+/tmp/ccy46Nck.o: In function `__hscore_hs_fileno':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:649: multiple definition of `__hscore_hs_fileno'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:649: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGABRT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:652: multiple definition of `__hsposix_SIGABRT'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:652: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGALRM':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:653: multiple definition of `__hsposix_SIGALRM'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:653: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGBUS':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:654: multiple definition of `__hsposix_SIGBUS'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:654: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGCHLD':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:655: multiple definition of `__hsposix_SIGCHLD'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:655: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGCONT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:656: multiple definition of `__hsposix_SIGCONT'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:656: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGFPE':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:657: multiple definition of `__hsposix_SIGFPE'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:657: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGHUP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:658: multiple definition of `__hsposix_SIGHUP'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:658: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGILL':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:659: multiple definition of `__hsposix_SIGILL'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:659: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGINT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:660: multiple definition of `__hsposix_SIGINT'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:660: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGKILL':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:661: multiple definition of `__hsposix_SIGKILL'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:661: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGPIPE':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:662: multiple definition of `__hsposix_SIGPIPE'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:662: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGQUIT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:663: multiple definition of `__hsposix_SIGQUIT'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:663: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGSEGV':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:664: multiple definition of `__hsposix_SIGSEGV'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:664: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGSTOP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:665: multiple definition of `__hsposix_SIGSTOP'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:665: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGTERM':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:666: multiple definition of `__hsposix_SIGTERM'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:666: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGTSTP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:667: multiple definition of `__hsposix_SIGTSTP'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:667: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGTTIN':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:668: multiple definition of `__hsposix_SIGTTIN'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:668: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGTTOU':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:669: multiple definition of `__hsposix_SIGTTOU'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:669: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGUSR1':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:670: multiple definition of `__hsposix_SIGUSR1'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:670: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGUSR2':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:671: multiple definition of `__hsposix_SIGUSR2'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:671: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGPOLL':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:673: multiple definition of `__hsposix_SIGPOLL'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:673: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGPROF':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:675: multiple definition of `__hsposix_SIGPROF'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:675: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGSYS':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:676: multiple definition of `__hsposix_SIGSYS'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:676: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGTRAP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:677: multiple definition of `__hsposix_SIGTRAP'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:677: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGURG':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:678: multiple definition of `__hsposix_SIGURG'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:678: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGVTALRM':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:679: multiple definition of `__hsposix_SIGVTALRM'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:679: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGXCPU':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:680: multiple definition of `__hsposix_SIGXCPU'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:680: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIGXFSZ':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:681: multiple definition of `__hsposix_SIGXFSZ'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:681: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIG_BLOCK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:683: multiple definition of `__hsposix_SIG_BLOCK'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:683: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIG_UNBLOCK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:684: multiple definition of `__hsposix_SIG_UNBLOCK'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:684: first defined here
+/tmp/ccy46Nck.o: In function `__hsposix_SIG_SETMASK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:685: multiple definition of `__hsposix_SIG_SETMASK'
+/tmp/ccYrWcly.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:685: first defined here
+collect2: error: ld returned 1 exit status
+runhugs: Error occurred
+ERROR "../../hugsdir/libraries/Foreign/C/Error.hs" - Error while running compilation command 'gcc -g   -shared -fPIC -D__HUGS__ "-I../hugsdir/include" "../../hugsdir/libraries/Foreign/C/Error.c" -o "../../hugsdir/libraries/Foreign/C/Error.so" -I../../hugsdir/libraries/Foreign/C -I../../hugsdir/libraries -I../../hugsdir/include -I/home/bollu/work/hugs/hugs/fptools/libraries/base/include /home/bollu/work/hugs/hugs/fptools/libraries/base/cbits/errno.c'
+
+
+Compiling ../../hugsdir/libraries/Foreign/Marshal/Alloc.hs
+Compiling ../../hugsdir/libraries/Foreign/Marshal/Utils.hs
+Compiling ../../hugsdir/libraries/System/Posix/Internals.hs
+In file included from ../../hugsdir/libraries/System/Posix/Internals.c:4:0:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isreg’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isreg(m)  { return S_ISREG(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isdir’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isdir(m)  { return S_ISDIR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isfifo’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isfifo(m) { return S_ISFIFO(m); }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isblk’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isblk(m)  { return S_ISBLK(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_ischr’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_ischr(m)  { return S_ISCHR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_issock’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_issock(m) { return S_ISSOCK(m); }
+            ^
+In file included from /home/bollu/work/hugs/hugs/fptools/libraries/base/cbits/PrelIOUtils.c:8:0:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isreg’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isreg(m)  { return S_ISREG(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isdir’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isdir(m)  { return S_ISDIR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isfifo’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isfifo(m) { return S_ISFIFO(m); }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isblk’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isblk(m)  { return S_ISBLK(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_ischr’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_ischr(m)  { return S_ISCHR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_issock’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_issock(m) { return S_ISSOCK(m); }
+            ^
+In file included from /home/bollu/work/hugs/hugs/fptools/libraries/base/cbits/dirUtils.c:15:0:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isreg’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isreg(m)  { return S_ISREG(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isdir’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isdir(m)  { return S_ISDIR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isfifo’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isfifo(m) { return S_ISFIFO(m); }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isblk’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isblk(m)  { return S_ISBLK(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_ischr’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_ischr(m)  { return S_ISCHR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_issock’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_issock(m) { return S_ISSOCK(m); }
+            ^
+/tmp/cc07cS2R.o: In function `__hscore_s_isreg':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210: multiple definition of `__hscore_s_isreg'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_s_isdir':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211: multiple definition of `__hscore_s_isdir'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_s_isfifo':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212: multiple definition of `__hscore_s_isfifo'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_s_isblk':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213: multiple definition of `__hscore_s_isblk'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_s_ischr':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214: multiple definition of `__hscore_s_ischr'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_s_issock':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216: multiple definition of `__hscore_s_issock'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_sigemptyset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:223: multiple definition of `__hscore_sigemptyset'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:223: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_sigfillset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:227: multiple definition of `__hscore_sigfillset'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:227: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_sigaddset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:231: multiple definition of `__hscore_sigaddset'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:231: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_sigdelset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:235: multiple definition of `__hscore_sigdelset'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:235: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_sigismember':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:239: multiple definition of `__hscore_sigismember'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:239: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_memcpy_dst_off':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:244: multiple definition of `__hscore_memcpy_dst_off'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:244: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_memcpy_src_off':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:248: multiple definition of `__hscore_memcpy_src_off'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:248: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_supportsTextMode':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:252: multiple definition of `__hscore_supportsTextMode'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:252: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_bufsiz':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:262: multiple definition of `__hscore_bufsiz'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:262: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_seek_cur':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:268: multiple definition of `__hscore_seek_cur'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:268: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_o_binary':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:274: multiple definition of `__hscore_o_binary'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:274: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_o_rdonly':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:284: multiple definition of `__hscore_o_rdonly'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:284: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_o_wronly':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:294: multiple definition of `__hscore_o_wronly'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:294: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_o_rdwr':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:304: multiple definition of `__hscore_o_rdwr'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:304: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_o_append':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:314: multiple definition of `__hscore_o_append'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:314: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_o_creat':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:324: multiple definition of `__hscore_o_creat'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:324: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_o_excl':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:334: multiple definition of `__hscore_o_excl'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:334: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_o_trunc':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:344: multiple definition of `__hscore_o_trunc'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:344: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_o_noctty':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:354: multiple definition of `__hscore_o_noctty'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:354: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_o_nonblock':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:364: multiple definition of `__hscore_o_nonblock'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:364: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_seek_set':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:374: multiple definition of `__hscore_seek_set'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:374: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_seek_end':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:380: multiple definition of `__hscore_seek_end'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:380: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_setmode':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:386: multiple definition of `__hscore_setmode'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:386: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_PrelHandle_write':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:397: multiple definition of `__hscore_PrelHandle_write'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:397: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_PrelHandle_read':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:409: multiple definition of `__hscore_PrelHandle_read'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:409: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_mkdir':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:429: multiple definition of `__hscore_mkdir'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:429: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_lstat':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:439: multiple definition of `__hscore_lstat'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:439: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_long_path_size':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:452: multiple definition of `__hscore_long_path_size'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:452: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_R_OK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:458: multiple definition of `__hscore_R_OK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:458: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_W_OK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:461: multiple definition of `__hscore_W_OK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:461: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_X_OK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:464: multiple definition of `__hscore_X_OK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:464: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_S_IRUSR':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:468: multiple definition of `__hscore_S_IRUSR'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:468: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_S_IWUSR':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:471: multiple definition of `__hscore_S_IWUSR'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:471: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_S_IXUSR':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:474: multiple definition of `__hscore_S_IXUSR'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:474: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_d_name':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:480: multiple definition of `__hscore_d_name'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:480: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_end_of_dir':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:491: multiple definition of `__hscore_end_of_dir'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:491: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_free_dirent':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:501: multiple definition of `__hscore_free_dirent'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:501: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_sizeof_stat':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:509: multiple definition of `__hscore_sizeof_stat'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:509: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_st_mtime':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:513: multiple definition of `__hscore_st_mtime'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:513: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_st_size':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:514: multiple definition of `__hscore_st_size'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:514: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_st_mode':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:516: multiple definition of `__hscore_st_mode'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:516: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_lflag':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:520: multiple definition of `__hscore_lflag'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:520: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_poke_lflag':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:523: multiple definition of `__hscore_poke_lflag'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:523: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_ptr_c_cc':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:527: multiple definition of `__hscore_ptr_c_cc'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:527: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_sizeof_termios':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:531: multiple definition of `__hscore_sizeof_termios'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:531: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_sizeof_sigset_t':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:543: multiple definition of `__hscore_sizeof_sigset_t'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:543: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_echo':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:550: multiple definition of `__hscore_echo'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:550: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_tcsanow':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:561: multiple definition of `__hscore_tcsanow'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:561: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_icanon':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:572: multiple definition of `__hscore_icanon'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:572: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_vmin':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:581: multiple definition of `__hscore_vmin'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:581: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_vtime':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:590: multiple definition of `__hscore_vtime'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:590: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_sigttou':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:599: multiple definition of `__hscore_sigttou'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:599: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_sig_block':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:608: multiple definition of `__hscore_sig_block'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:608: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_sig_setmask':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:617: multiple definition of `__hscore_sig_setmask'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:617: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_f_getfl':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:627: multiple definition of `__hscore_f_getfl'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:627: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_f_setfl':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:637: multiple definition of `__hscore_f_setfl'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:637: first defined here
+/tmp/cc07cS2R.o: In function `__hscore_hs_fileno':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:649: multiple definition of `__hscore_hs_fileno'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:649: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGABRT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:652: multiple definition of `__hsposix_SIGABRT'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:652: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGALRM':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:653: multiple definition of `__hsposix_SIGALRM'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:653: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGBUS':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:654: multiple definition of `__hsposix_SIGBUS'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:654: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGCHLD':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:655: multiple definition of `__hsposix_SIGCHLD'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:655: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGCONT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:656: multiple definition of `__hsposix_SIGCONT'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:656: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGFPE':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:657: multiple definition of `__hsposix_SIGFPE'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:657: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGHUP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:658: multiple definition of `__hsposix_SIGHUP'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:658: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGILL':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:659: multiple definition of `__hsposix_SIGILL'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:659: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGINT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:660: multiple definition of `__hsposix_SIGINT'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:660: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGKILL':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:661: multiple definition of `__hsposix_SIGKILL'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:661: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGPIPE':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:662: multiple definition of `__hsposix_SIGPIPE'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:662: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGQUIT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:663: multiple definition of `__hsposix_SIGQUIT'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:663: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGSEGV':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:664: multiple definition of `__hsposix_SIGSEGV'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:664: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGSTOP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:665: multiple definition of `__hsposix_SIGSTOP'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:665: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGTERM':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:666: multiple definition of `__hsposix_SIGTERM'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:666: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGTSTP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:667: multiple definition of `__hsposix_SIGTSTP'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:667: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGTTIN':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:668: multiple definition of `__hsposix_SIGTTIN'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:668: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGTTOU':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:669: multiple definition of `__hsposix_SIGTTOU'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:669: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGUSR1':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:670: multiple definition of `__hsposix_SIGUSR1'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:670: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGUSR2':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:671: multiple definition of `__hsposix_SIGUSR2'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:671: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGPOLL':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:673: multiple definition of `__hsposix_SIGPOLL'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:673: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGPROF':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:675: multiple definition of `__hsposix_SIGPROF'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:675: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGSYS':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:676: multiple definition of `__hsposix_SIGSYS'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:676: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGTRAP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:677: multiple definition of `__hsposix_SIGTRAP'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:677: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGURG':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:678: multiple definition of `__hsposix_SIGURG'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:678: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGVTALRM':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:679: multiple definition of `__hsposix_SIGVTALRM'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:679: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGXCPU':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:680: multiple definition of `__hsposix_SIGXCPU'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:680: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIGXFSZ':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:681: multiple definition of `__hsposix_SIGXFSZ'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:681: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIG_BLOCK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:683: multiple definition of `__hsposix_SIG_BLOCK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:683: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIG_UNBLOCK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:684: multiple definition of `__hsposix_SIG_UNBLOCK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:684: first defined here
+/tmp/cc07cS2R.o: In function `__hsposix_SIG_SETMASK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:685: multiple definition of `__hsposix_SIG_SETMASK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:685: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_s_isreg':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210: multiple definition of `__hscore_s_isreg'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_s_isdir':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211: multiple definition of `__hscore_s_isdir'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_s_isfifo':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212: multiple definition of `__hscore_s_isfifo'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_s_isblk':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213: multiple definition of `__hscore_s_isblk'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_s_ischr':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214: multiple definition of `__hscore_s_ischr'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_s_issock':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216: multiple definition of `__hscore_s_issock'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_sigemptyset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:223: multiple definition of `__hscore_sigemptyset'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:223: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_sigfillset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:227: multiple definition of `__hscore_sigfillset'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:227: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_sigaddset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:231: multiple definition of `__hscore_sigaddset'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:231: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_sigdelset':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:235: multiple definition of `__hscore_sigdelset'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:235: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_sigismember':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:239: multiple definition of `__hscore_sigismember'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:239: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_memcpy_dst_off':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:244: multiple definition of `__hscore_memcpy_dst_off'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:244: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_memcpy_src_off':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:248: multiple definition of `__hscore_memcpy_src_off'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:248: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_supportsTextMode':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:252: multiple definition of `__hscore_supportsTextMode'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:252: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_bufsiz':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:262: multiple definition of `__hscore_bufsiz'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:262: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_seek_cur':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:268: multiple definition of `__hscore_seek_cur'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:268: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_o_binary':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:274: multiple definition of `__hscore_o_binary'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:274: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_o_rdonly':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:284: multiple definition of `__hscore_o_rdonly'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:284: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_o_wronly':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:294: multiple definition of `__hscore_o_wronly'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:294: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_o_rdwr':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:304: multiple definition of `__hscore_o_rdwr'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:304: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_o_append':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:314: multiple definition of `__hscore_o_append'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:314: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_o_creat':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:324: multiple definition of `__hscore_o_creat'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:324: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_o_excl':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:334: multiple definition of `__hscore_o_excl'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:334: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_o_trunc':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:344: multiple definition of `__hscore_o_trunc'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:344: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_o_noctty':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:354: multiple definition of `__hscore_o_noctty'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:354: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_o_nonblock':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:364: multiple definition of `__hscore_o_nonblock'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:364: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_seek_set':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:374: multiple definition of `__hscore_seek_set'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:374: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_seek_end':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:380: multiple definition of `__hscore_seek_end'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:380: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_setmode':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:386: multiple definition of `__hscore_setmode'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:386: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_PrelHandle_write':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:397: multiple definition of `__hscore_PrelHandle_write'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:397: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_PrelHandle_read':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:409: multiple definition of `__hscore_PrelHandle_read'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:409: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_mkdir':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:429: multiple definition of `__hscore_mkdir'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:429: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_lstat':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:439: multiple definition of `__hscore_lstat'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:439: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_long_path_size':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:452: multiple definition of `__hscore_long_path_size'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:452: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_R_OK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:458: multiple definition of `__hscore_R_OK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:458: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_W_OK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:461: multiple definition of `__hscore_W_OK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:461: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_X_OK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:464: multiple definition of `__hscore_X_OK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:464: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_S_IRUSR':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:468: multiple definition of `__hscore_S_IRUSR'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:468: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_S_IWUSR':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:471: multiple definition of `__hscore_S_IWUSR'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:471: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_S_IXUSR':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:474: multiple definition of `__hscore_S_IXUSR'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:474: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_d_name':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:480: multiple definition of `__hscore_d_name'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:480: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_end_of_dir':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:491: multiple definition of `__hscore_end_of_dir'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:491: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_free_dirent':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:501: multiple definition of `__hscore_free_dirent'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:501: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_sizeof_stat':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:509: multiple definition of `__hscore_sizeof_stat'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:509: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_st_mtime':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:513: multiple definition of `__hscore_st_mtime'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:513: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_st_size':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:514: multiple definition of `__hscore_st_size'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:514: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_st_mode':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:516: multiple definition of `__hscore_st_mode'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:516: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_lflag':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:520: multiple definition of `__hscore_lflag'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:520: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_poke_lflag':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:523: multiple definition of `__hscore_poke_lflag'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:523: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_ptr_c_cc':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:527: multiple definition of `__hscore_ptr_c_cc'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:527: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_sizeof_termios':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:531: multiple definition of `__hscore_sizeof_termios'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:531: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_sizeof_sigset_t':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:543: multiple definition of `__hscore_sizeof_sigset_t'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:543: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_echo':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:550: multiple definition of `__hscore_echo'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:550: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_tcsanow':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:561: multiple definition of `__hscore_tcsanow'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:561: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_icanon':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:572: multiple definition of `__hscore_icanon'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:572: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_vmin':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:581: multiple definition of `__hscore_vmin'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:581: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_vtime':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:590: multiple definition of `__hscore_vtime'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:590: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_sigttou':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:599: multiple definition of `__hscore_sigttou'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:599: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_sig_block':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:608: multiple definition of `__hscore_sig_block'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:608: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_sig_setmask':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:617: multiple definition of `__hscore_sig_setmask'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:617: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_f_getfl':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:627: multiple definition of `__hscore_f_getfl'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:627: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_f_setfl':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:637: multiple definition of `__hscore_f_setfl'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:637: first defined here
+/tmp/ccJfO3AF.o: In function `__hscore_hs_fileno':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:649: multiple definition of `__hscore_hs_fileno'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:649: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGABRT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:652: multiple definition of `__hsposix_SIGABRT'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:652: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGALRM':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:653: multiple definition of `__hsposix_SIGALRM'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:653: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGBUS':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:654: multiple definition of `__hsposix_SIGBUS'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:654: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGCHLD':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:655: multiple definition of `__hsposix_SIGCHLD'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:655: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGCONT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:656: multiple definition of `__hsposix_SIGCONT'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:656: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGFPE':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:657: multiple definition of `__hsposix_SIGFPE'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:657: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGHUP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:658: multiple definition of `__hsposix_SIGHUP'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:658: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGILL':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:659: multiple definition of `__hsposix_SIGILL'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:659: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGINT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:660: multiple definition of `__hsposix_SIGINT'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:660: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGKILL':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:661: multiple definition of `__hsposix_SIGKILL'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:661: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGPIPE':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:662: multiple definition of `__hsposix_SIGPIPE'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:662: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGQUIT':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:663: multiple definition of `__hsposix_SIGQUIT'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:663: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGSEGV':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:664: multiple definition of `__hsposix_SIGSEGV'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:664: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGSTOP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:665: multiple definition of `__hsposix_SIGSTOP'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:665: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGTERM':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:666: multiple definition of `__hsposix_SIGTERM'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:666: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGTSTP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:667: multiple definition of `__hsposix_SIGTSTP'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:667: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGTTIN':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:668: multiple definition of `__hsposix_SIGTTIN'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:668: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGTTOU':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:669: multiple definition of `__hsposix_SIGTTOU'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:669: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGUSR1':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:670: multiple definition of `__hsposix_SIGUSR1'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:670: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGUSR2':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:671: multiple definition of `__hsposix_SIGUSR2'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:671: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGPOLL':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:673: multiple definition of `__hsposix_SIGPOLL'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:673: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGPROF':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:675: multiple definition of `__hsposix_SIGPROF'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:675: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGSYS':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:676: multiple definition of `__hsposix_SIGSYS'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:676: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGTRAP':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:677: multiple definition of `__hsposix_SIGTRAP'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:677: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGURG':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:678: multiple definition of `__hsposix_SIGURG'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:678: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGVTALRM':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:679: multiple definition of `__hsposix_SIGVTALRM'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:679: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGXCPU':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:680: multiple definition of `__hsposix_SIGXCPU'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:680: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIGXFSZ':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:681: multiple definition of `__hsposix_SIGXFSZ'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:681: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIG_BLOCK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:683: multiple definition of `__hsposix_SIG_BLOCK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:683: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIG_UNBLOCK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:684: multiple definition of `__hsposix_SIG_UNBLOCK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:684: first defined here
+/tmp/ccJfO3AF.o: In function `__hsposix_SIG_SETMASK':
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:685: multiple definition of `__hsposix_SIG_SETMASK'
+/tmp/cczPA0H4.o:/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:685: first defined here
+collect2: error: ld returned 1 exit status
+runhugs: Error occurred
+ERROR "../../hugsdir/libraries/System/Posix/Internals.hs" - Error while running compilation command 'gcc -g   -shared -fPIC -D__HUGS__ "-I../hugsdir/include" "../../hugsdir/libraries/System/Posix/Internals.c" -o "../../hugsdir/libraries/System/Posix/Internals.so" -I../../hugsdir/libraries/System/Posix -I../../hugsdir/libraries -I../../hugsdir/include -I/home/bollu/work/hugs/hugs/fptools/libraries/base/include /home/bollu/work/hugs/hugs/fptools/libraries/base/cbits/PrelIOUtils.c /home/bollu/work/hugs/hugs/fptools/libraries/base/cbits/dirUtils.c /home/bollu/work/hugs/hugs/fptools/libraries/base/cbits/consUtils.c'
+
+
+Compiling ../../hugsdir/libraries/System/Posix/Signals.hs
+In file included from ../../hugsdir/libraries/System/Posix/Signals_inc.h:4:0,
+                 from ../../hugsdir/libraries/System/Posix/Signals.c:4:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isreg’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isreg(m)  { return S_ISREG(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isdir’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isdir(m)  { return S_ISDIR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isfifo’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isfifo(m) { return S_ISFIFO(m); }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isblk’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isblk(m)  { return S_ISBLK(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_ischr’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_ischr(m)  { return S_ISCHR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_issock’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_issock(m) { return S_ISSOCK(m); }
+            ^
+Compiling ../../hugsdir/libraries/Text/Regex/Posix.hs
+In file included from ../../hugsdir/libraries/Text/Regex/Posix_inc.h:4:0,
+                 from ../../hugsdir/libraries/Text/Regex/Posix.c:4:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isreg’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:210:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isreg(m)  { return S_ISREG(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isdir’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:211:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isdir(m)  { return S_ISDIR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isfifo’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:212:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isfifo(m) { return S_ISFIFO(m); }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_isblk’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:213:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_isblk(m)  { return S_ISBLK(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_ischr’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:214:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_ischr(m)  { return S_ISCHR(m);  }
+            ^
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h: In function ‘__hscore_s_issock’:
+/home/bollu/work/hugs/hugs/fptools/libraries/base/include/HsBase.h:216:12: warning: type of ‘m’ defaults to ‘int’ [-Wimplicit-int]
+ INLINE int __hscore_s_issock(m) { return S_ISSOCK(m); }
+            ^
+Compiling ../../hugsdir/libraries/Network/BSD.hs
+runhugs: Error occurred
+ERROR "../../hugsdir/libraries/Network/BSD.hs" - Module "Network.Socket" not previously loaded
+
+
+Compiling ../../hugsdir/libraries/System/Posix/Directory.hs
+../../hugsdir/libraries/System/Posix/Directory.c: In function ‘hugsprim_telldir_2’:
+../../hugsdir/libraries/System/Posix/Directory.c:23:12: warning: implicit declaration of function ‘telldir’ [-Wimplicit-function-declaration]
+     res1 = telldir(arg1);
+            ^
+../../hugsdir/libraries/System/Posix/Directory.c: In function ‘hugsprim_seekdir_1’:
+../../hugsdir/libraries/System/Posix/Directory.c:35:5: warning: implicit declaration of function ‘seekdir’ [-Wimplicit-function-declaration]
+     seekdir(arg1, arg2);
+     ^
+Compiling ../../hugsdir/libraries/System/Posix/DynamicLinker/Prim.hs
+Compiling ../../hugsdir/libraries/System/Posix/Env.hs
+Compiling ../../hugsdir/libraries/System/Posix/Files.hs
+Compiling ../../hugsdir/libraries/System/Posix/Process.hs
+Compiling ../../hugsdir/libraries/System/Posix/Resource.hs
+Compiling ../../hugsdir/libraries/System/Posix/Temp.hs
+Compiling ../../hugsdir/libraries/System/Posix/Terminal.hs
+Compiling ../../hugsdir/libraries/System/Posix/Time.hs
+Compiling ../../hugsdir/libraries/System/Posix/Unistd.hs
+Compiling ../../hugsdir/libraries/System/Posix/User.hs
