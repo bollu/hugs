@@ -201,6 +201,7 @@ Void loadPrelude() {  /* load in the Prelude module(s). */
 	       STD_PRELUDE_HUGS, hugsPath);
 	fatal("Unable to load prelude implementation");
     }
+    fprintf(stderr, "loading prelude from: |%s|\n", prelLocation);
     addScriptName(prelLocation, FALSE);
     
     /* add the H98 Prelude module to the stack */

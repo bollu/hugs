@@ -27,7 +27,7 @@
 
 #include <setjmp.h>
 
-static Void   setHugsAPI   Args((Void));
+static Void   setHugsAPI   Args((HugsServerAPI*));
 static Bool   SetModule    Args((String));
 #ifndef NO_DYNAMIC_TYPES
 static Bool   linkDynamic     Args((Void));
@@ -71,40 +71,40 @@ static HVal   PopHVal         Args((Void));
 static Void   PushHVal        Args((HVal));
 static Void   FreeHVal        Args((HVal));
 
-static HugsServerAPI hugs;             /* virtual function table            */
+// static HugsServerAPI hugs;             /* virtual function table            */
 
-static Void setHugsAPI() {       /* initialise virtual function table */
+static Void setHugsAPI(HugsServerAPI *hugs) {       /* initialise virtual function table */
     static Bool api_inited = FALSE;
     if (!api_inited) {
       api_inited = TRUE;
 
-      hugs.clearError      = ClearError;
-      hugs.setHugsArgs     = setHugsArgs;
-      hugs.getNumScripts   = GetNumScripts;
-      hugs.reset           = Reset;
-      hugs.setOutputEnable = SetOutputEnable;
-      hugs.changeDir       = ChangeDir;
-      hugs.loadProject     = LoadProject;
-      hugs.loadFile        = LoadFile;
-      hugs.loadFromBuffer  = LoadStringF;
-      hugs.setOptions      = SetOptions;
-      hugs.getOptions      = GetOptions;
-      hugs.compileExpr     = CompileExpr;
-      hugs.garbageCollect  = GarbageCollect;
-      hugs.lookupName      = LookupName;
-      hugs.mkInt           = MkInt;
-      hugs.mkAddr          = MkAddr;
-      hugs.mkString        = MkString;
-      hugs.apply           = Apply;
-      hugs.evalInt         = EvalInt;
-      hugs.evalAddr        = EvalAddr;
-      hugs.evalString      = EvalString;
-      hugs.doIO            = DoIO;
-      hugs.doIO_Int        = DoIO_Int;
-      hugs.doIO_Addr       = DoIO_Addr;
-      hugs.popHVal         = PopHVal;
-      hugs.pushHVal        = PushHVal;
-      hugs.freeHVal        = FreeHVal;
+      hugs->clearError      = ClearError;
+      hugs->setHugsArgs     = setHugsArgs;
+      hugs->getNumScripts   = GetNumScripts;
+      hugs->reset           = Reset;
+      hugs->setOutputEnable = SetOutputEnable;
+      hugs->changeDir       = ChangeDir;
+      hugs->loadProject     = LoadProject;
+      hugs->loadFile        = LoadFile;
+      hugs->loadFromBuffer  = LoadStringF;
+      hugs->setOptions      = SetOptions;
+      hugs->getOptions      = GetOptions;
+      hugs->compileExpr     = CompileExpr;
+      hugs->garbageCollect  = GarbageCollect;
+      hugs->lookupName      = LookupName;
+      hugs->mkInt           = MkInt;
+      hugs->mkAddr          = MkAddr;
+      hugs->mkString        = MkString;
+      hugs->apply           = Apply;
+      hugs->evalInt         = EvalInt;
+      hugs->evalAddr        = EvalAddr;
+      hugs->evalString      = EvalString;
+      hugs->doIO            = DoIO;
+      hugs->doIO_Int        = DoIO_Int;
+      hugs->doIO_Addr       = DoIO_Addr;
+      hugs->popHVal         = PopHVal;
+      hugs->pushHVal        = PushHVal;
+      hugs->freeHVal        = FreeHVal;
     }
 }
 
@@ -194,7 +194,8 @@ String s; {
 
 */
 
-DLLEXPORT(HugsServerAPI*) initHugsServer(argc, argv) /*server initialisation*/
+void initHugsServer(hugs, argc, argv) /*server initialisation*/
+HugsServerAPI *hugs;
 Int    argc;
 String argv[]; {
 
@@ -202,7 +203,7 @@ String argv[]; {
 
     if (!is_initialized) {
       is_initialized = TRUE;
-      setHugsAPI();
+      setHugsAPI(hugs);
       
       BEGIN_PROTECT			/* Too much text for protect()	   */
       Int i;
@@ -232,22 +233,24 @@ String argv[]; {
       everybody(RESET);
 #ifndef NO_DYNAMIC_TYPES
       if (!linkDynamic()) {
-	setError("module HugsDynamic doesn't define correct functions");
-	return NULL;
+          setError("module HugsDynamic doesn't define correct functions");
+          // return NULL;
       }
 #endif
       END_PROTECT
    }
-   return &hugs;  /* error must have occurred */
+   // return &hugs;  /* error must have occurred */
 }
 
 /* Just give me the method table; initialisation is assumed to already have taken
  * place. Used when external code needs to callback into Haskell.
  */
-HugsServerAPI* getHugsAPI() {
-  setHugsAPI();
+/*
+HugsServerAPI* getHugsAPI(HugsServerAPI *hugs) {
+  setHugsAPI(hugs);
   return &hugs;
 }
+*/
 
 /* --------------------------------------------------------------------------
  * Shutting down:

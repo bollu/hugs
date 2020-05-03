@@ -64,7 +64,8 @@ typedef struct _HugsServerAPI {
     void  (*freeHVal       ) Args((HVal)); 
 } HugsServerAPI;
 
-DLLEXPORT(HugsServerAPI*) initHugsServer Args((Int, String[]));
+// DLLEXPORT(HugsServerAPI*) initHugsServer Args((HugsServerAP*, Int, String[]));
+void initHugsServer Args((HugsServerAPI*, Int, String[]));
 DLLEXPORT(Void) shutdownHugsServer Args((HugsServerAPI*));
 
 #ifdef __cplusplus 

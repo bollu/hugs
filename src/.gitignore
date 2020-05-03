@@ -6,3 +6,6 @@ runhugs
 ffihugs
 *.lib
 *.exp
+runhugs-emcc.js
+runhugs-emcc.out
+runhugs-emcc.wasm
