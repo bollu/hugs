@@ -201,39 +201,55 @@ String argv[]; {
 
     static Bool is_initialized = FALSE;
 
+    printf("ran till FILE(%s) LINE(%d)\n", __FILE__, __LINE__);
     if (!is_initialized) {
       is_initialized = TRUE;
       setHugsAPI(hugs);
       
+      printf("ran till FILE(%s) LINE(%d)\n", __FILE__, __LINE__);
       BEGIN_PROTECT			/* Too much text for protect()	   */
       Int i;
 
+      printf("ran till FILE(%s) LINE(%d)\n", __FILE__, __LINE__);
       startEvaluator();
+      printf("ran till FILE(%s) LINE(%d)\n", __FILE__, __LINE__);
+      readOptionSettings();
+      printf("ran till FILE(%s) LINE(%d)\n", __FILE__, __LINE__);
 
+      /*
       if (argc == -1) {
-	readOptions(argv[0],FALSE);
+        readOptions(argv[0],FALSE);
       } else {
-	readOptionSettings();
-	/* re-parse options for the benefit of #! (which takes only one arg) */
-	for (i=1; i<argc && (argv[i][0]=='+' || argv[i][0]=='-'); ++i) {
-	  if (!readOptions2(argv[i])) {
-	    setError("Unrecognised option");
-	    return NULL;
-	  }
-	}
-      }
+          readOptionSettings();
+          // re-parse options for the benefit of #! (which takes only one arg)
+          for (i=1; i<argc && (argv[i][0]=='+' || argv[i][0]=='-'); ++i) {
+              if (!readOptions2(argv[i])) {
+                setError("Unrecognised option");
+                return;
+                // return NULL;
+              }
+	      }
+      }*/
       EnableOutput(FALSE);
-      loadPrelude();
+      printf("ran till FILE(%s) LINE(%d)\n", __FILE__, __LINE__);
+      printf("=> DISABLED LOAD PRELUDE FILE (%s) LINE (%d)\n", __FILE__, __LINE__);
+      loadNoImplicitPrelude();
+      //loadPrelude();
+      printf("ran till FILE(%s) LINE(%d)\n", __FILE__, __LINE__);
 
 #ifndef NO_DYNAMIC_TYPES
       addScriptName("Hugs.Dynamic",TRUE);
+      printf("ran till FILE(%s) LINE(%d)\n", __FILE__, __LINE__);
 #endif
 
       readScripts(0);
+      printf("ran till FILE(%s) LINE(%d)\n", __FILE__, __LINE__);
       everybody(RESET);
+      printf("ran till FILE(%s) LINE(%d)\n", __FILE__, __LINE__);
 #ifndef NO_DYNAMIC_TYPES
       if (!linkDynamic()) {
           setError("module HugsDynamic doesn't define correct functions");
+          return;
           // return NULL;
       }
 #endif

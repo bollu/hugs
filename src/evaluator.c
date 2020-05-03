@@ -189,6 +189,23 @@ Module m; {        /* evaluate expr and print value    */
 /* --------------------------------------------------------------------------
  * Read in prelude module(s):
  * ------------------------------------------------------------------------*/
+Void loadNoImplicitPrelude() {
+    everybody(INSTALL);
+
+    /* Hack to temporarily turn off 'listScripts' feature. */
+    const Bool listFlg = listScripts;
+    listScripts = FALSE;
+    readScripts(0);
+    listScripts = listFlg;
+
+    /* We record the number of scripts that loading the Prelude
+     * brought about, so that when the user comes to clear the module
+     * stack (e.g., ":l<ENTER>"), only modules later than the Prelude
+     * ones are scratched.
+     */
+    setScriptStableMark();
+}
+
 Void loadPrelude() {  /* load in the Prelude module(s). */
     String prelLocation;
     Bool   listFlg;

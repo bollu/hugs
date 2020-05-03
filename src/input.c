@@ -22,6 +22,9 @@
 #include "goal.h"
 #include "machdep.h"
 #include <ctype.h>
+#include <stdio.h> // for popen
+#include <assert.h>
+
 
 #if HAVE_WINDOWS_H
 #include <windows.h>
@@ -416,7 +419,8 @@ Long   len; {                           /* used to set target for reading) */
 	} else {
 	    cmd[reallen] = '\0';
 	}
-	inputStream = popen(cmd,"r");
+    assert(0 && "attempting to open input stream...");
+	// inputStream = popen(cmd,"r");
 	free(cmd);
     } else {
 	inputStream = fopen(nm,FOPEN_MODE);

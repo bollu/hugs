@@ -10,10 +10,11 @@
 #ifndef __EVALUATOR_H__
 #define __EVALUATOR_H__
 
-extern Void startEvaluator    Args((Void));
-extern Void stopEvaluator     Args((Void));
-extern Void evaluator         Args((Module));
-extern Void everybody         Args((Int));
-extern Void loadPrelude       Args((Void));
+extern Void startEvaluator              Args((Void));
+extern Void stopEvaluator               Args((Void));
+extern Void evaluator                   Args((Module));
+extern Void everybody                   Args((Int));
+extern Void loadPrelude                 Args((Void));
+extern Void loadNoImplicitPrelude       Args((Void));
 
 #endif /* __EVALUATOR_H__ */

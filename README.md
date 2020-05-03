@@ -92,18 +92,18 @@ $ :quit
 
 #### Long version (for Unix-like environments):
 
- 0) Choose a directory (or directories) for the Hugs files to go in.
-    In the following, we'll assume:
+1. Choose a directory (or directories) for the Hugs files to go in.
+   In the following, we'll assume:
 
 ```
-    /usr/local/solaris/bin             user executables
-    /usr/local/solaris/lib/hugs        architecture dependent files
-    /usr/local/lib/hugs                architecture independent files
+/usr/local/solaris/bin             user executables
+/usr/local/solaris/lib/hugs        architecture dependent files
+/usr/local/lib/hugs                architecture independent files
 ```
 
 Check that these directories have appropriate permission settings.
 
-1) Run the configure script:
+2. Run the configure script:
 
 ```
 $ cd hugs98/src/unix
@@ -126,7 +126,7 @@ plus some others related to documentation and testing.
 Read `Hugs98/src/unix/INSTALL` to find out about general configuration
 options.  Hugs-specific options are listed at the end of this file.
 
-2) Build Hugs and the libraries
+3. Build Hugs and the libraries
 
 This step builds the executables, calls the shell script
 `src/unix/convert_libraries` to convert the Haskell library
@@ -153,7 +153,7 @@ Regression tests are run by `make check`.  You can also run
 status of each module in fptools/libraries -- none of them
 should be `ERROR`.
 
-3) Install Hugs in chosen directories
+4. Install Hugs in chosen directories
 
 ```
 $ make install
@@ -204,14 +204,13 @@ This kind of script would also be a good place to set system-wide
 default options (eg to select an editor or to switch on the
 "show types" option).
 
-4) Cleanup after yourself
+5. Cleanup after yourself
 
 You can now run `make clean` to delete all machine-generated files.
 If you ran `make install`, you could delete the entire Hugs source
 tree - but you might want to keep the `Hugs98/doc` directory.
 
 # Hugs specific configuration options
-
 
 ##### `--enable-ffi / --disable-ffi`
 
@@ -250,7 +249,7 @@ without any significant optimizations, means that there are much more
 significant overheads than can be accounted for by small variations in
 Hugs code.
 
-##### --enable-profiling
+##### `--enable-profiling`
 
 Gather statistics about heap allocation during evaluation.
 Statistics are written to a file profile.hp which may be viewed
@@ -260,24 +259,24 @@ This option makes Hugs use much more memory and run much slower.
 The ":set -d" command can be used to reduce the time overhead by
 controlling the frequency with which statistics are gathered.
 
-##### --with-nmake
+##### `--with-nmake`
 
 Try to generate a Makefile that will work with Microsoft's nmake.
 
-##### --disable-large-banner
+##### `--disable-large-banner`
 
 Print a single-line startup banner instead of the 9 line banner.
 (This option will cause the "make check" regression tests to fail.)
 
-##### --with-gui
+##### `--with-gui`
 
 Used when generating Hugs for Windows.  Only works with Borland C++
 
-##### --enable-internal-prims
+##### `--enable-internal-prims`
 
 Enable experimental features used in Hugs98/lib/hugs/HugsInternals.hs
 
-##### --enable-stack-dumps
+##### `--enable-stack-dumps`
 
 Enable printing of the top and bottom few objects on the stack when
 stack overflow happens.  This feature is currently (Sept'97) just a
@@ -285,13 +284,13 @@ proof of concept.  We welcome suggestions (and/or code) to make it
 useful for people who don't have an intimate knowledge of how the
 G machine operates.
 
-##### --enable-debug
-##### --enable-tag-checks
-##### --enable-lint
+##### `--enable-debug`
+##### `--enable-tag-checks`
+##### `--enable-lint`
 
 For use when debugging Hugs.
 
-##### --with-preprocessor
+##### `--with-preprocessor`
 
 This is an experimental feature and may change in future versions.
 (It's turned on by default at the moment.)
@@ -309,9 +308,9 @@ say
 If you have perl and gcc installed on your machine, the following
 script provides a simple cpp-like preprocessor.
 
-
-     eval "exec perl -S $0 $*"
-	  if $running_under_some_random_shell;
+```
+eval "exec perl -S $0 $*"
+if $running_under_some_random_shell;
      #
      # Reads CPP output and turns #line things into appropriate Haskell
      # pragmas.  This program is derived from the "hscpp" script
@@ -325,15 +324,16 @@ script provides a simple cpp-like preprocessor.
 	 s/^#\s*line\s+(\d+)\s+(\".+\")$/\{\-# LINE \1 \2 \-\}/;
 	 s/^#\s*(\d+)\s+(\".*\").*/\{\-# LINE \1 \2 \-\}/;
 	 print $_;
-     }
-     close(INPIPE) || exit(1); # exit is so we reflect any errors.
-     exit(0);
+}
+close(INPIPE) || exit(1); # exit is so we reflect any errors.
+exit(0);
+```
 
-   Note that Hugs currently ignores the `{-# LINE _ _ #-}` pragmas so error
-   messages will refer to the wrong line numbers.
+Note that Hugs currently ignores the `{-# LINE _ _ #-}` pragmas so error
+messages will refer to the wrong line numbers.
 
 
-## Notes on MVars
+# Notes on MVars
 
 MVars are implemented in terms of `IORef`, inside `ConcBase`.
 
@@ -350,4 +350,62 @@ data MVarState a
   -- to be functions. :-(
   | Empty [a -> IOResult]
   -- no value, just a list of threads waiting to receive a value
+```
+
+- The `--preprocessor` flag connects to the preprocessor using `popen`.
+  This fails on `wasm`, naturally. 
+
+```c
+    if (!readable(nm,FALSE)) { /* file not there */
+  inputStream = NULL;
+    } else if (preprocessor) {
+  Int reallen = strlen(preprocessor) + 1 + strlen(nm) + 1;
+  char *cmd = malloc(reallen+1);
+  if (cmd == NULL) {
+      ERRMSG(0) "Unable to allocate memory for filter command."
+      EEND_NORET;
+      return FALSE;
+  }
+  if (snprintf(cmd,reallen, "%s %s", preprocessor, nm) < 0) {
+      ERRMSG(0) "Unable to allocate memory for filter command."
+      EEND_NORET;
+      return FALSE;
+  } else {
+      cmd[reallen] = '\0';
+  }
+    assert(0 && "attempting to open input stream...");
+  // inputStream = popen(cmd,"r");
+
+```
+
+# WASM builds
+- [Built using `emscripten`](https://emscripten.org/docs/compiling/WebAssembly.html#webassembly).
+- `source ~/work/hugs/emsdk/emsdk_env.sh` first to get the environment.
+- then `cd src && make`.
+- `onRuntimeInitialized` needs to be waited on till we can use wasm.
+
+# Spelunking
+
+```c
+#if     SMALL_HUGS			/* the McDonalds mentality :-)	   */
+#define Pick(s,r,l)	   s
+#endif
+#if     REGULAR_HUGS
+#define Pick(s,r,l)	   r
+#endif
+#if     LARGE_HUGS
+#define Pick(s,r,l)	   l
+#endif
+```
+
+- This is funny; I suppose the `UNKNOWN_BUFFERING` occurs when you attempt to
+  create a handle, but because of laziness don't know in what mode to open
+  the handle? Very weird. I want to track this down.
+
+```c
+#define HUNKNOWN_BUFFERING (-1) /* the buffering mode of a handle is lazily
+           determined. */
+#define HANDLE_NOTBUFFERED    1
+#define HANDLE_LINEBUFFERED   2
+#define HANDLE_BLOCKBUFFERED  3
 ```
