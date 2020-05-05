@@ -5603,6 +5603,45 @@ const char *ioexts_hs = "-------------------------------------------------------
 "primitive hugsHIsEOF \"hugsHIsEOF\" :: Handle -> IO Bool\n"
 "hugsIsEOF             :: IO Bool\n"
 "hugsIsEOF              = hugsHIsEOF stdin\n";
+const int N_PRELUDE_FILES = 35;
+
 const char *prelude_names[] = {"Exception.hs", "System.hs", "Trex.hs", "Stable.hs", "ST.hs", "ByteArray.hs", "CVHAssert.hs", "Prelude.hs", "ForeignPtr.hs", "Observe.hs", "Dynamic.hs", "Word.hs", "Quote.hs", "LazyST.hs", "Char.hs", "Internals.hs", "Memo.hs", "Storable_aux.h", "IOArray.hs", "Weak.hs", "IO.hs", "Array.hs", "Directory.hs", "ConcBase.hs", "Bits.hs", "Int.hs", "Numeric.hs", "Ptr.hs", "GenericPrint.hs", "IORef.hs", "Storable.hs", "Time.hs", "Storable_aux.c", "StablePtr.hs", "IOExts.hs"};
 
-const char *prelude_contents[] = {exception_hs, system_hs, trex_hs, stable_hs, st_hs, bytearray_hs, cvhassert_hs, prelude_hs, foreignptr_hs, observe_hs, dynamic_hs, word_hs, quote_hs, lazyst_hs, char_hs, internals_hs, memo_hs, storable_aux_h, ioarray_hs, weak_hs, io_hs, array_hs, directory_hs, concbase_hs, bits_hs, int_hs, numeric_hs, ptr_hs, genericprint_hs, ioref_hs, storable_hs, time_hs, storable_aux_c, stableptr_hs, ioexts_hs};
+const char *prelude_contents[35];
+__attribute__((constructor)) void initialize_prelude_contents() {
+	prelude_contents[0] = exception_hs;
+	prelude_contents[1] = system_hs;
+	prelude_contents[2] = trex_hs;
+	prelude_contents[3] = stable_hs;
+	prelude_contents[4] = st_hs;
+	prelude_contents[5] = bytearray_hs;
+	prelude_contents[6] = cvhassert_hs;
+	prelude_contents[7] = prelude_hs;
+	prelude_contents[8] = foreignptr_hs;
+	prelude_contents[9] = observe_hs;
+	prelude_contents[10] = dynamic_hs;
+	prelude_contents[11] = word_hs;
+	prelude_contents[12] = quote_hs;
+	prelude_contents[13] = lazyst_hs;
+	prelude_contents[14] = char_hs;
+	prelude_contents[15] = internals_hs;
+	prelude_contents[16] = memo_hs;
+	prelude_contents[17] = storable_aux_h;
+	prelude_contents[18] = ioarray_hs;
+	prelude_contents[19] = weak_hs;
+	prelude_contents[20] = io_hs;
+	prelude_contents[21] = array_hs;
+	prelude_contents[22] = directory_hs;
+	prelude_contents[23] = concbase_hs;
+	prelude_contents[24] = bits_hs;
+	prelude_contents[25] = int_hs;
+	prelude_contents[26] = numeric_hs;
+	prelude_contents[27] = ptr_hs;
+	prelude_contents[28] = genericprint_hs;
+	prelude_contents[29] = ioref_hs;
+	prelude_contents[30] = storable_hs;
+	prelude_contents[31] = time_hs;
+	prelude_contents[32] = storable_aux_c;
+	prelude_contents[33] = stableptr_hs;
+	prelude_contents[34] = ioexts_hs;
+}

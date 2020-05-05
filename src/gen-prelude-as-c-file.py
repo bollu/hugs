@@ -41,12 +41,19 @@ for fm in fms:
     out.write("\nconst char *" + filename_to_c_var(fm.name) + " = " + \
               "\n".join(ls) + ";")
 
+out.write("\nconst int N_PRELUDE_FILES = " + str(len(fms)) + ";\n")
+
 out.write("\nconst char *prelude_names[] = {" + \
           ", ".join([DOUBLEQUOTE + fm.name + DOUBLEQUOTE for fm in fms]) + \
           "};\n")
 
-out.write("\nconst char *prelude_contents[] = {" + \
-          ", ".join([filename_to_c_var(fm.name) for fm in fms]) + \
-          "};\n")
+
+# write prelude_contents array and its initializer.
+out.write("\nconst char *prelude_contents[" + str(len(fms)) + "];\n")
+out.write("__attribute__((constructor)) void initialize_prelude_contents() {\n")
+for i, fm in enumerate(fms):
+    out.write("\tprelude_contents[" + str(i) + "] = " + \
+            filename_to_c_var(fm.name) + ";\n")
+out.write("}\n");
 
 out.close()
