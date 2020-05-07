@@ -21,10 +21,15 @@ extern Void   startEval       Args((Void));
 extern Bool   safeEval        Args((Cell));
 extern String ClearError      Args((Void));
 extern Cell   getTypeableDict Args((Type));
+
 extern char*  lastError;
 
 /* Get the API method table from the currently running interpreter.
  * => the interpreter / server is assumed to have already been initialized.
  */
-extern HugsServerAPI* getHugsAPI Args((Void));
+// extern HugsServerAPI* getHugsAPI Args((Void));
+extern Void setHugsAPI           Args((HugsServerAPI*));
+#ifndef NO_DYNAMIC_TYPES
+Bool linkDynamic                 Args((Void));
+#endif
 /* ------------------------------------------------------------------------*/

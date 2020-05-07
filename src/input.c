@@ -1915,6 +1915,17 @@ Long   len; {                          /* Used to set a target for reading */
     return FALSE;
 }
 
+// Bool parseScriptFromMemory(nm, contents)               /* Read a script                    */
+// String nm;
+// String contents; {
+//     input(RESET);
+//     stringInput(contents);
+//     scriptFile = nm;
+//     parseInput(SCRIPT);
+//     return TRUE;
+// }
+
+
 Void parseExp() {                      /* Read an expression to evaluate   */
     parseInput(EXPR);
     setLastExpr(inputExpr);
