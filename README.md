@@ -409,3 +409,12 @@ data MVarState a
 #define HANDLE_LINEBUFFERED   2
 #define HANDLE_BLOCKBUFFERED  3
 ```
+
+
+```
+make runhugs-emcc && ./runhugs-emcc.out&& emrun --no_browser --port 8080 runhugs-emcc.html
+```
+
+# Problems
+
+- Mixed tabs and spaces
