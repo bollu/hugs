@@ -263,6 +263,7 @@ static Void   local searchChr     Args((Int));
 static Void   local searchStr     Args((String));
 static Bool   local tryEndings    Args((String));
 static Bool   local find1	  Args((String));
+  // turn module name into filename
 static Bool   local find2	  Args((String));
 #if DOS_FILENAMES
 static Bool   local isPathSep     Args((String));

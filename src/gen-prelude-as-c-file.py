@@ -41,8 +41,11 @@ for fm in fms:
     ls = [DOUBLEQUOTE + escape(l.replace("\n", "")) + NEWLINE + DOUBLEQUOTE for l in f.readlines()]
     f.close()
 
-    out.write("\nconst char *" + filepath_to_c_var(fm.path) + " = " + \
-              "\n".join(ls) + ";")
+    out.write("\nconst char *" + filepath_to_c_var(fm.path) + "_contents = ");
+    if ls:
+        out.write("\n".join(ls) + ";\n")
+    else:
+        out.write(DOUBLEQUOTE + DOUBLEQUOTE + ";\n");
 
 out.write("\nconst int N_PRELUDE_FILES = " + str(len(fms)) + ";\n")
 
@@ -56,7 +59,7 @@ out.write("\nconst char *prelude_contents[" + str(len(fms)) + "];\n")
 out.write("__attribute__((constructor)) void initialize_prelude_contents() {\n")
 for i, fm in enumerate(fms):
     out.write("\tprelude_contents[" + str(i) + "] = " + \
-            filepath_to_c_var(fm.path) + ";\n")
+            filepath_to_c_var(fm.path) + "_contents;\n")
 out.write("}\n");
 
 out.write("#endif")

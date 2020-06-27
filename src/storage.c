@@ -1609,10 +1609,10 @@ Int val, mx; {
 
 static Script scriptHw;                 /* next unused script number       */
 #if WANT_FIXED_SIZE_TABLES
-static script scripts[NUM_SCRIPTS];     /* storage for script records      */
+static script g_scripts[NUM_SCRIPTS];     /* storage for script records      */
 #else
-static script* scripts = NULL;
-static DynTable* dynTabScripts = NULL;  /* storage for script records      */
+static script* g_scripts = NULL;
+static DynTable* g_dynTabScripts = NULL;  /* storage for script records      */
 #endif
 
 Script startNewScript(f)                /* start new script, keeping record */
@@ -1623,9 +1623,9 @@ String f; {                             /* of status for later restoration  */
 	EEND;
     }
 #else
-    if (scriptHw >= (Int)(dynTabScripts->maxIdx)) {
-      growDynTable(dynTabScripts);
-      scripts = (script*)(dynTabScripts->data);
+    if (scriptHw >= (Int)(g_dynTabScripts->maxIdx)) {
+      growDynTable(g_dynTabScripts);
+      g_scripts = (script*)(g_dynTabScripts->data);
     }
 #endif
 #if DEBUG_SHOWUSE
@@ -1646,20 +1646,20 @@ String f; {                             /* of status for later restoration  */
 #endif
 #endif
 
-    scripts[scriptHw].file         = findText( f ? f : "<nofile>" );
-    scripts[scriptHw].textHw       = textHw;
-    scripts[scriptHw].nextNewText  = nextNewText;
-    scripts[scriptHw].nextNewDText = nextNewDText;
-    scripts[scriptHw].addrHw       = addrHw;
-    scripts[scriptHw].moduleHw     = moduleHw;
-    scripts[scriptHw].tyconHw      = tyconHw;
-    scripts[scriptHw].nameHw       = nameHw;
-    scripts[scriptHw].classHw      = classHw;
-    scripts[scriptHw].instHw       = instHw;
+    g_scripts[scriptHw].file         = findText( f ? f : "<nofile>" );
+    g_scripts[scriptHw].textHw       = textHw;
+    g_scripts[scriptHw].nextNewText  = nextNewText;
+    g_scripts[scriptHw].nextNewDText = nextNewDText;
+    g_scripts[scriptHw].addrHw       = addrHw;
+    g_scripts[scriptHw].moduleHw     = moduleHw;
+    g_scripts[scriptHw].tyconHw      = tyconHw;
+    g_scripts[scriptHw].nameHw       = nameHw;
+    g_scripts[scriptHw].classHw      = classHw;
+    g_scripts[scriptHw].instHw       = instHw;
 #if TREX
-    scripts[scriptHw].extHw        = extHw;
+    g_scripts[scriptHw].extHw        = extHw;
 #endif
-    scripts[scriptHw].prims        = NULL;
+    g_scripts[scriptHw].prims        = NULL;
 
     return scriptHw++;
 }
@@ -1670,7 +1670,7 @@ Bool isPreludeScript() {                /* Test whether this is the Prelude*/
 
 Bool moduleThisScript(m)                /* Test if given module is defined */
 Module m; {                             /* in current script file          */
-    return scriptHw<1 || m>=scripts[scriptHw-1].moduleHw;
+    return scriptHw<1 || m>=g_scripts[scriptHw-1].moduleHw;
 }
 
 Module lastModule() {              /* Return module in current script file */
@@ -1682,7 +1682,7 @@ Module lastModule() {              /* Return module in current script file */
   	t x; {                         \
 	  Script s=0;                  \
 	  while (s<scriptHw            \
-	       && x>=scripts[s].tag)   \
+	       && x>=g_scripts[s].tag)   \
   	    s++;                       \
           return s;                    \
 	}
@@ -1695,7 +1695,7 @@ scriptThis(scriptThisClass,Class,classHw)
 
 Module moduleOfScript(s)
 Script s; {
-    return (s==0) ? modulePrelude : scripts[s-1].moduleHw;
+    return (s==0) ? modulePrelude : g_scripts[s-1].moduleHw;
 }
 
 String fileOfModule(m)
@@ -1705,8 +1705,8 @@ Module m; {
 	return findMPathname(STD_PRELUDE_HUGS);
     }
     for(s=0; s<scriptHw; ++s) {
-	if ( scripts[s].moduleHw == m ) {
-	    return textToStr(scripts[s].file);
+	if ( g_scripts[s].moduleHw == m ) {
+	    return textToStr(g_scripts[s].file);
 	}
     }
     return 0;
@@ -1716,7 +1716,7 @@ Script scriptThisFile(f)
 Text f; {
     Script s;
     for (s=0; s < scriptHw; ++s) {
-	if (scripts[s].file == f) {
+	if (g_scripts[s].file == f) {
 	    return s+1;
 	}
     }
@@ -1732,24 +1732,24 @@ Script sno; {
     int i = sno + 1;
     
     while (i < scriptHw) {
-	scripts[i-1].file = scripts[i].file;
-	scripts[i-1].textHw = scripts[i].textHw;
-	scripts[i-1].nextNewText = scripts[i].nextNewText;
-	scripts[i-1].nextNewDText = scripts[i].nextNewDText;
-	scripts[i-1].addrHw = scripts[i].addrHw;
-	scripts[i-1].moduleHw = scripts[i].moduleHw;
-	scripts[i-1].tyconHw = scripts[i].tyconHw;
-	scripts[i-1].nameHw = scripts[i].nameHw;
-	scripts[i-1].classHw = scripts[i].classHw;
-	scripts[i-1].instHw = scripts[i].instHw;
+	g_scripts[i-1].file = g_scripts[i].file;
+	g_scripts[i-1].textHw = g_scripts[i].textHw;
+	g_scripts[i-1].nextNewText = g_scripts[i].nextNewText;
+	g_scripts[i-1].nextNewDText = g_scripts[i].nextNewDText;
+	g_scripts[i-1].addrHw = g_scripts[i].addrHw;
+	g_scripts[i-1].moduleHw = g_scripts[i].moduleHw;
+	g_scripts[i-1].tyconHw = g_scripts[i].tyconHw;
+	g_scripts[i-1].nameHw = g_scripts[i].nameHw;
+	g_scripts[i-1].classHw = g_scripts[i].classHw;
+	g_scripts[i-1].instHw = g_scripts[i].instHw;
 #if TREX
-	scripts[i-1].extHw = scripts[i].extHw;
+	g_scripts[i-1].extHw = g_scripts[i].extHw;
 #endif
-	if (scripts[i-1].prims) {
-	  freePrimInfo(scripts[i-1].prims);
-	  scripts[i-1].prims = 0;
+	if (g_scripts[i-1].prims) {
+	  freePrimInfo(g_scripts[i-1].prims);
+	  g_scripts[i-1].prims = 0;
 	}
-	scripts[i-1].prims = scripts[i].prims;
+	g_scripts[i-1].prims = g_scripts[i].prims;
 
 	i++;
     }
@@ -1759,17 +1759,17 @@ Void dropScriptsFrom(sno)               /* Restore storage to state prior  */
 Script sno; {                           /* to reading script sno           */
     if (sno >= 0 && sno < scriptHw) {   /* is there anything to restore?   */
 	int i;
-	textHw       = scripts[sno].textHw;
-	nextNewText  = scripts[sno].nextNewText;
-	nextNewDText = scripts[sno].nextNewDText;
-	moduleHw     = scripts[sno].moduleHw;
-	addrHw       = scripts[sno].addrHw;
-	tyconHw      = scripts[sno].tyconHw;
-	nameHw       = scripts[sno].nameHw;
-	classHw      = scripts[sno].classHw;
-	instHw       = scripts[sno].instHw;
+	textHw       = g_scripts[sno].textHw;
+	nextNewText  = g_scripts[sno].nextNewText;
+	nextNewDText = g_scripts[sno].nextNewDText;
+	moduleHw     = g_scripts[sno].moduleHw;
+	addrHw       = g_scripts[sno].addrHw;
+	tyconHw      = g_scripts[sno].tyconHw;
+	nameHw       = g_scripts[sno].nameHw;
+	classHw      = g_scripts[sno].classHw;
+	instHw       = g_scripts[sno].instHw;
 #if TREX
-	extHw        = scripts[sno].extHw;
+	extHw        = g_scripts[sno].extHw;
 #endif
 
 	for (i=0; i<TEXTHSZ; ++i) {
@@ -1806,9 +1806,9 @@ Script sno; {                           /* to reading script sno           */
 
 	i = sno;
 	while (i < scriptHw) {
-	  if (scripts[i].prims) {
-	    freePrimInfo(scripts[i].prims);
-            scripts[i].prims = 0;
+	  if (g_scripts[i].prims) {
+	    freePrimInfo(g_scripts[i].prims);
+            g_scripts[i].prims = 0;
 	  }
 	  i++;
 	}
@@ -1818,7 +1818,7 @@ Script sno; {                           /* to reading script sno           */
 
 Void setScriptPrims(p)  /* set the current script's primitive record. */
 void* p; {
-  scripts[scriptHw-1].prims = (struct primInfoDef*)p;
+  g_scripts[scriptHw-1].prims = (struct primInfoDef*)p;
   return;
 }
 
@@ -3487,9 +3487,9 @@ Int what; {
       /* Release all primitive DLLs */
       i = 0;
       while (i < scriptHw) {
-	if (scripts[i].prims) {
-	  freePrimInfo(scripts[i].prims);
-	  scripts[i].prims = 0;
+	if (g_scripts[i].prims) {
+	  freePrimInfo(g_scripts[i].prims);
+	  g_scripts[i].prims = 0;
 	}
 	i++;
       }
@@ -3502,7 +3502,7 @@ Int what; {
       }
       
 #if !WANT_FIXED_SIZE_TABLES      
-      if (dynTabScripts) freeDynTable(dynTabScripts);
+      if (g_dynTabScripts) freeDynTable(g_dynTabScripts);
 #endif
     }
 }
@@ -3702,8 +3702,8 @@ Int what; {
 		       }
 		       
 #if !WANT_FIXED_SIZE_TABLES
-		       dynTabScripts = allocDynTable(sizeof(script),10,0,"scripts");
-		       scripts = (script*)(dynTabScripts->data);
+		       g_dynTabScripts = allocDynTable(sizeof(script),10,0,"g_scripts");
+		       g_scripts = (script*)(g_dynTabScripts->data);
 		       dynTabClass = allocDynTable(sizeof(struct strClass),10,NUM_CLASSES,"class");
 		       tabClass = (struct strClass*)(dynTabClass->data);
 

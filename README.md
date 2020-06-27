@@ -58,6 +58,14 @@ a stable, feature-rich version of Haskell98 whose goals are:
 This involves having _great_ error messages, fast compile cycles, and
 best in class optimisations.
 
+I wish to be able to compile:
+
+- pandoc
+- xmonad
+- agda
+
+with this.
+
 
 # Building and Installing Hugs from Source
 
@@ -417,4 +425,4 @@ make runhugs-emcc && ./runhugs-emcc.out&& emrun --no_browser --port 8080 runhugs
 
 # Problems
 
-- Mixed tabs and spaces
+- Mixed tabs and spacesmake runhugs-emcc && ./runhugs-emcc.out&& emrun --no_browser --port 8080 runhugs-emcc.html

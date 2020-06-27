@@ -7005,6 +7005,9 @@ Void checkDefns() {			/* Top level static analysis	   */
     Module thisModule = lastModule();
     staticAnalysis(RESET);
 
+    fprintf(stderr, "thisModule: |%d| Prelude: |%d|\n", thisModule, modulePrelude);
+    fflush(stderr);
+
     setCurrModule(thisModule);
 
     /* Resolve module references */

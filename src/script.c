@@ -39,10 +39,11 @@ struct strScript {
     Bool chased;      /* Added by import chasing?        */
 };
 
-static struct strScript scriptTable[NUM_SCRIPTS];
+// what the fuck are the invriants of this thing?
+static struct strScript g_scriptTable[NUM_SCRIPTS];
 
 static Int    numScripts;               /* Number of scripts loaded        */
-static Int    namesUpto;                /* Number of script names set      */
+static Int    g_namesUpto;                /* Number of script names set      */
 static Int    scriptsStable;            /* Number of (Prelude) scripts     */
                                         /* considered 'stable'             */
                                         /* (=> won't be nuked when clearing */
@@ -63,7 +64,7 @@ static Void local freeScript    Args((Int));
 Void initScripts() {
   scriptFile    = 0;
   numScripts    = 0;
-  namesUpto     = 0;
+  g_namesUpto     = 0;
   scriptsStable = 0;
 }
 
@@ -76,12 +77,12 @@ Void stopScripts() {
 
 static Void local freeScript(i)
 Int i; {
-  if (scriptTable[i].fileName)
-    free(scriptTable[i].fileName);
-  if (scriptTable[i].realName)
-    free(scriptTable[i].realName);
-  if (scriptTable[i].directory)
-    free(scriptTable[i].directory);
+  if (g_scriptTable[i].fileName)
+    free(g_scriptTable[i].fileName);
+  if (g_scriptTable[i].realName)
+    free(g_scriptTable[i].realName);
+  if (g_scriptTable[i].directory)
+    free(g_scriptTable[i].directory);
 }
 
 /* We record the number of scripts that loading the Prelude
@@ -90,13 +91,13 @@ Int i; {
  * ones are scratched.
  */
 Void setScriptStableMark() {
-  scriptsStable = namesUpto;
+  scriptsStable = g_namesUpto;
 }
 
 String getScriptName(s)  /* access the script name at index 's' */
 Script s; {
   if ( s >=0 && s <= numScripts ) {
-    return scriptTable[s].fileName;
+    return g_scriptTable[s].fileName;
   } else {
     ERRMSG(0) "getScriptName: Illegal script index %d (max: %d)", s, numScripts
     EEND;
@@ -107,7 +108,7 @@ Script s; {
 String getScriptRealName(s)  /* access the path of script at index 's' */
 Script s; {
   if ( s >=0 && s <= numScripts ) {
-    return scriptTable[s].realName;
+    return g_scriptTable[s].realName;
   } else {
     ERRMSG(0) "getScriptRealName: Illegal script index %d (max: %d)", s, numScripts
     EEND;
@@ -116,7 +117,7 @@ Script s; {
 }
 
 Int getScriptHwMark() { /* return number of on the stack, loaded or not. */
-  return namesUpto;
+  return g_namesUpto;
 }
 
 Int numLoadedScripts() { /* return number of currently loaded scripts */
@@ -132,19 +133,19 @@ Script s; {
 
 Void setScriptHwMark(s)
 Script s; {
-  namesUpto = s;
+  g_namesUpto = s;
 }
 
 Void setScriptName(s,scr)
 Script s;
 String scr; {
-  scriptTable[s].fileName = scr;
+  g_scriptTable[s].fileName = scr;
 }
 
 Void setScriptRealName(s,scr)
 Script s;
 String scr; {
-  scriptTable[s].realName = scr;
+  g_scriptTable[s].realName = scr;
 }
 #endif
 
@@ -155,7 +156,7 @@ String scr; {
 Void addScriptName(s,sch)  /* Add script to list of scripts   */
 String s;                  /* to be read in ...               */
 Bool   sch; {              /* TRUE => requires pathname search*/
-    if (namesUpto>=NUM_SCRIPTS) {
+    if (g_namesUpto>=NUM_SCRIPTS) {
   ERRMSG(0) "Too many module files (maximum of %d allowed)",
       NUM_SCRIPTS
   EEND;
@@ -168,24 +169,25 @@ Bool   sch; {              /* TRUE => requires pathname search*/
     ERRMSG(0) "Can't find module \"%s\"", s
     EEND;
       }
-      scriptTable[namesUpto].fileName  = strCopy(location);
-      scriptTable[namesUpto].directory = NULL;
+      g_scriptTable[g_namesUpto].fileName  = strCopy(location);
+      g_scriptTable[g_namesUpto].directory = NULL;
   } else {
-      scriptTable[namesUpto].fileName  = strCopy(findPathname(s));
-      scriptTable[namesUpto].directory = dirname(scriptTable[namesUpto].fileName);
+      g_scriptTable[g_namesUpto].fileName  = strCopy(findPathname(s));
+      g_scriptTable[g_namesUpto].directory = dirname(g_scriptTable[g_namesUpto].fileName);
   }
     } else {
-  scriptTable[namesUpto].fileName  = strCopy(s);
-  scriptTable[namesUpto].directory = NULL;
+  g_scriptTable[g_namesUpto].fileName  = strCopy(s);
+  g_scriptTable[g_namesUpto].directory = NULL;
     }
-    scriptTable[namesUpto].realName   = strCopy(RealPath(scriptTable[namesUpto].fileName));
-    scriptTable[namesUpto].chased     = !sch;
-    namesUpto++;
+    g_scriptTable[g_namesUpto].realName   = strCopy(RealPath(g_scriptTable[g_namesUpto].fileName));
+    g_scriptTable[g_namesUpto].chased     = !sch;
+    g_namesUpto++;
 }
 
 static Bool local addScript(fname,len)  /* read single script file */
-String fname;                           /* name of script file     */
-Long   len; {                           /* length of script file   */
+    String fname;                           /* name of script file     */
+    Long   len; 
+{                           /* length of script file   */
 #if HUGS_FOR_WINDOWS         /* Set clock cursor while loading   */
     allowBreak();
     SetCursor(LoadCursor(NULL, IDC_WAIT));
@@ -193,16 +195,16 @@ Long   len; {                           /* length of script file   */
 #endif
 
     if (!quiet) {
-  Printf("Reading file \"%s\":\n",fname);  FlushStdout();
+        Printf("Reading file \"%s\":\n",fname);  FlushStdout();
     }
     setLastEdit(fname,0);
 
     needsImports = FALSE;
     scriptFile = 0;
     if (!parseScript(fname,len)) {   /* process script file */
-  /* file or parse error, drop the script */ 
-  forgetAScript(numScripts);
-  errFail();
+        /* file or parse error, drop the script */ 
+        forgetAScript(numScripts);
+        errFail();
     }
     if (needsImports) return FALSE;
     checkDefns();
@@ -214,57 +216,116 @@ Long   len; {                           /* length of script file   */
 }
 
 Bool chase(imps)                 /* Process list of import requests */
-List imps; {
+    List imps;
+{
+    /*
+    for (List imps_iter=imps; nonNull(imps_iter); imps_iter=tl(imps_iter)) {
+        String modname = textToStr(textOf(hd(imps_iter))); 
+        String modpath = malloc(strlen(modname) +5);
+        for(String src = modname, dest=modpath; *src != 0; ++src) {
+            // TODO: this will _not work_ in windows!
+            *dest++ = *src == '.' ? '/' : *src;
+        }
+        strcat(modpath, ".hs");
+        fprintf(stderr, "MODNAME: %s | CHASED: %s \n", modname, modpath);
+    }
+    */
+
+    // PLAN of attack:
+    // 1. Generate correct <module paths, module contents> from hugsdir
+    // 2. Edit code to search from hugsdir for modules
+    // 3. Use contents from that module.
     Int    origPos = numScripts; /* keep track of original position */
-    String origDir = scriptTable[origPos].directory;
+    String origDir = g_scriptTable[origPos].directory;
+
+    int prelude_ix = -1;
+    for (List imps_iter=imps; nonNull(imps_iter); imps_iter=tl(imps_iter)) {
+        // code cribbed from find2 in machdep.c
+        String modname = textToStr(textOf(hd(imps_iter))); 
+        String modpath = malloc(strlen(modname) +5);
+        for(String src = modname, dest=modpath; *src != 0; ++src) {
+            // TODO: this will _not work_ in windows!
+            *dest++ = *src == '.' ? '/' : *src;
+        }
+        strcat(modpath, ".hs");
+
+        fprintf(stderr, "MODNAME: %s | CHASED: %s \n", modname, modpath);
+
+        for(int i = 0; i < N_PRELUDE_FILES; i++) {
+            // fprintf(stderr, "\n\t comparing |%40s| with |%40s|", prelude_paths[i], modpath);
+            if (!strcmp(prelude_paths[i], modpath)) {
+                fprintf(stderr, " **FOUND MODULE. i: %d**\n", i);
+                prelude_ix = i;
+                break;
+            }
+        }
+
+        if (prelude_ix == -1) {
+            ERRMSG(0) "Can't find imported module \"%s\"", modname
+                EEND;
+        } else {
+            int i = 0;
+            for (; i< g_namesUpto; i++) {
+                fprintf(stderr, "g_scriptTable[%d].fileName = %s\n", i, g_scriptTable[i].fileName);
+                if (filenamecmp(g_scriptTable[i].fileName, modpath)==0)
+                    break;
+            }
+            // file is not found
+            if (i >= g_namesUpto) {
+            }
+
+        }
+    }
     for (; nonNull(imps); imps=tl(imps)) {
-  String modname = textToStr(textOf(hd(imps)));
-  String iname = NULL;
-  String rname;
-  Bool   inOrigDir = FALSE;
-  Int    i     = 0;
+        String modname =  textToStr(textOf(hd(imps)));
+        String iname = NULL;
+        String rname;
+        Bool   inOrigDir = FALSE;
+        Int    i     = 0;
 
-  if (origDir) {
-      iname = findMInDir(origDir,modname);
-      if (iname)
-    inOrigDir = TRUE;
-  }
-  if (iname == NULL)
-      iname = findMPathname(modname);
-  if (iname == NULL) {
-      ERRMSG(0) "Can't find imported module \"%s\"", modname
-      EEND;
-  }
 
-  rname = RealPath(iname);
-  for (; i<namesUpto; i++)
-      if (filenamecmp(scriptTable[i].realName,rname)==0)
-    break;
-  if (i>=origPos) {           /* Neither loaded or queued        */
-      struct strScript tmpScript;
+        if (origDir) {
+            // findMInDir is defined in connect.h
+            iname = findMInDir(origDir,modname);
+            if (iname)
+                inOrigDir = TRUE;
+        }
+        if (iname == NULL)
+            iname = findMPathname(modname);
+        if (iname == NULL) {
+            ERRMSG(0) "Can't find imported module \"%s\"", modname
+                EEND;
+        }
 
-      scriptTable[origPos].postponed = TRUE;
-      needsImports           = TRUE;
+        rname = RealPath(iname);
+        for (; i<g_namesUpto; i++)
+            if (filenamecmp(g_scriptTable[i].realName,rname)==0)
+                break;
+        if (i>=origPos) {           /* Neither loaded or queued        */
+            struct strScript tmpScript;
 
-      if (i>=namesUpto) {     /* Name not found (i==namesUpto)   */
-    addScriptName(iname,FALSE);
-    if (inOrigDir)
-        scriptTable[i].directory = strCopy(origDir);
-      } else if (scriptTable[i].postponed) {/* imported by itself? */
-    ERRMSG(0)
-      "Recursive import dependency between \"%s\" and \"%s\"",
-      scriptTable[origPos].fileName, iname
-    EEND;
-      }
-      /* Right rotate section of tables between numScripts and i so
-       * that i ends up with other imports in front of orig. script
-       */
-      tmpScript = scriptTable[i];
-      for (; i>numScripts; i--)
-    scriptTable[i] = scriptTable[i-1];
-      scriptTable[numScripts] = tmpScript;
-      origPos++;
-  }
+            g_scriptTable[origPos].postponed = TRUE;
+            needsImports           = TRUE;
+
+            if (i>=g_namesUpto) {     /* Name not found (i==g_namesUpto)   */
+                addScriptName(iname,FALSE);
+                if (inOrigDir)
+                    g_scriptTable[i].directory = strCopy(origDir);
+            } else if (g_scriptTable[i].postponed) {/* imported by itself? */
+                ERRMSG(0)
+                    "Recursive import dependency between \"%s\" and \"%s\"",
+                    g_scriptTable[origPos].fileName, iname
+                        EEND;
+            }
+            /* Right rotate section of tables between numScripts and i so
+             * that i ends up with other imports in front of orig. script
+             */
+            tmpScript = g_scriptTable[i];
+            for (; i>numScripts; i--)
+                g_scriptTable[i] = g_scriptTable[i-1];
+            g_scriptTable[numScripts] = tmpScript;
+            origPos++;
+        }
     }
     return needsImports;
 }
@@ -306,11 +367,11 @@ String argv[]; {
 Void forgetScriptsFrom(scno) /* remove scripts from system     */
 Script scno; {
     Script i;
-    for (i=scno; i<namesUpto; ++i)
+    for (i=scno; i<g_namesUpto; ++i)
   freeScript(i);
     dropScriptsFrom(scno-1); /* don't count prelude as script  */
-    namesUpto = scno;
-    if (numScripts>namesUpto)
+    g_namesUpto = scno;
+    if (numScripts>g_namesUpto)
   numScripts = scno;
 }
 
@@ -325,35 +386,52 @@ Void forgetAScript(scno) /* remove a script from system */
 Script scno; {
     Script i;
     
-    if (scno > namesUpto)
+    if (scno > g_namesUpto)
   return;
 
     freeScript(scno);
 
-    for (i=scno+1; i < namesUpto; i++)
-  scriptTable[i-1] = scriptTable[i];
+    for (i=scno+1; i < g_namesUpto; i++)
+  g_scriptTable[i-1] = g_scriptTable[i];
     dropAScript(scno);
-    namesUpto--;
+    g_namesUpto--;
 }
 
 Void readScriptsAutogeneratedPrelude() {
-    // addScript(scriptTable[numScripts].fileName,fileSize)
-    for(int i = 0; i < N_PRELUDE_FILES; i++) {
-        const char *fname = prelude_names[i];
-        const char *contents = prelude_contents[i];
-        if (!quiet) {
-           Printf("Reading file \"%s\":\n",fname);  FlushStdout();
-        }
-        setLastEdit(fname,0);
+    // addScript(g_scriptTable[numScripts].fileName,fileSize)
+    // Attempting to co-opt addScript(fname,len)
+    // for(int i = 0; i < N_PRELUDE_FILES; i++) {
+    //     const char *fpath = prelude_paths[i];
+    //     const char *contents = prelude_contents[i];
+    //     fprintf(stderr, "%s:%d Reading file \"%s\":\n", __FILE__, __LINE__, fpath);  FlushStdout();
+    //     parseScriptString(strdup(contents));
+    // }
+    //
+    
+    fprintf(stderr, "%s:%d\n", __FILE__, __LINE__);
+    needsImports = FALSE;
+    parseScriptString(strdup(Prelude_contents));
 
-        needsImports = FALSE;
-        scriptFile = 0;
-        parseScriptString(contents);
+    // parseScriptString(strdup(Data_Ratio_contents));
+    // parseScriptString(strdup(Ratio_contents));
+    fprintf(stderr, "%s:%d\n", __FILE__, __LINE__);
+    if (!needsImports) {
+      checkDefns();
+      fprintf(stderr, "%s:%d\n", __FILE__, __LINE__);
+      assert(0);
+      fprintf(stderr, "%s:%d\n", __FILE__, __LINE__);
+      typeCheckDefns();
+      fprintf(stderr, "%s:%d\n", __FILE__, __LINE__);
+      compileDefns();
+      fprintf(stderr, "%s:%d\n", __FILE__, __LINE__);
     }
+    preludeLoaded = TRUE;
+    
 }
 
 Void readScripts(n)        /* Reread current list of scripts, */
-Int n; {                   /* loading everything after and    */
+    Int n;
+{                   /* loading everything after and    */
     Time timeStamp;        /* including the first script which*/
     Long fileSize;         /* has been either changed or added*/
 
@@ -361,38 +439,42 @@ Int n; {                   /* loading everything after and    */
     SetCursor(LoadCursor(NULL, IDC_WAIT));
 #endif
     fprintf(stderr, "CALLED readScripts()\n");
+    // assert(0);
+
     for (int i = 0; i<numScripts; i++) {
-        fprintf(stderr, "scriptTable[%d] = %s\n", i, scriptTable[i].fileName);
+        fprintf(stderr, "g_scriptTable[%d] = %s\n", i, g_scriptTable[i].fileName);
     }
 
     for (; n<numScripts; n++) {         /* Scan previously loaded scripts  */
-        getFileInfo(scriptTable[n].fileName, &timeStamp, &fileSize);
-        if (timeChanged(timeStamp,scriptTable[n].lastChange)) {
+        getFileInfo(g_scriptTable[n].fileName, &timeStamp, &fileSize);
+        if (timeChanged(timeStamp,g_scriptTable[n].lastChange)) {
             dropScriptsFrom(n-1);
             numScripts = n;
             break;
         }
     }
     for (; n<NUM_SCRIPTS; n++)          /* No scripts have been postponed  */
-  scriptTable[n].postponed = FALSE;       /* at this stage                   */
+        g_scriptTable[n].postponed = FALSE;       /* at this stage                   */
 
 
-    while (numScripts<namesUpto) {      /* Process any remaining scripts   */
-  getFileInfo(scriptTable[numScripts].fileName, &timeStamp, &fileSize);
-  timeSet(scriptTable[numScripts].lastChange,timeStamp);
-  if (numScripts>0)               /* no new script for prelude       */
-      startNewScript(scriptTable[numScripts].fileName);
-        generate_ffi = generateFFI && !scriptTable[numScripts].chased;
-  if (addScript(scriptTable[numScripts].fileName,fileSize))
-      numScripts++;
-  else
-      dropScriptsFrom(numScripts-1);
+    while (numScripts<g_namesUpto) {      /* Process any remaining scripts   */
+        getFileInfo(g_scriptTable[numScripts].fileName, &timeStamp, &fileSize);
+        timeSet(g_scriptTable[numScripts].lastChange,timeStamp);
+        if (numScripts>0) {               /* no new script for prelude       */
+            fprintf(stderr, "startNewScript(%s)\n", g_scriptTable[numScripts].fileName);
+            startNewScript(g_scriptTable[numScripts].fileName);
+        }
+        generate_ffi = generateFFI && !g_scriptTable[numScripts].chased;
+        if (addScript(g_scriptTable[numScripts].fileName,fileSize))
+            numScripts++;
+        else
+            dropScriptsFrom(numScripts-1);
     }
 
     if (listScripts)
-  whatScripts();
+        whatScripts();
     if (numScripts<=1)
-  setLastEdit((String)0, 0);
+        setLastEdit((String)0, 0);
 }
 
 Void whatScripts() {       /* list scripts in current session */
@@ -402,7 +484,7 @@ Void whatScripts() {       /* list scripts in current session */
 #endif
     Printf("\nHugs session for:");
     for (i=0; i<numScripts; ++i)
-  Printf("\n%s",scriptTable[i].fileName);
+  Printf("\n%s",g_scriptTable[i].fileName);
     Putchar('\n');
 #if HUGS_FOR_WINDOWS
     }
